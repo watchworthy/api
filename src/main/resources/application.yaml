@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/moviedb
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    name: movieDatasource
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: update
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 20
+  jpa:
+    open-in-view: false
+
+server:
+  port: 8081
+
+service:
+  client:
+    url:
+      tmdb-service: ${TMDB_URL:https://api.themoviedb.org/3/}
+    secrets:
+      tmdb-secret: ${TMBD_SECRET:14e1a56e4d03b85e51b78fcfd6e055ec}
