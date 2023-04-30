@@ -15,11 +15,11 @@ spring:
         persistence:
           schema-generation:
             database:
-              action: create
-            create-source: metadata
-            scripts:
               action: update
-              create-target: update.sql
+#            create-source: metadata
+#            scripts:
+#              action: update
+#              create-target: update.sql
 
       hibernate:
         show_sql: true
