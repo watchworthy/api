@@ -5,15 +5,36 @@ spring:
     username: postgres
     password: postgres
     name: movieDatasource
-    jpa:
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-      hibernate:
-        ddl-auto: update
-    hikari:
-      connection-timeout: 20000
-      maximum-pool-size: 20
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
+    show-sql: true
+    generate-ddl: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: create
+            create-source: metadata
+            scripts:
+              action: update
+              create-target: update.sql
+
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        generate_statistics: false
+        jdbc:
+          fetch_size: 2000
+          lob.non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        hbm2dll:
+          create_namespaces: true
+        default_schema: public
+
 
 server:
   port: 8081
