@@ -7,13 +7,19 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="roles")
+import javax.lang.model.type.IntersectionType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity(name = "comments")
 @Getter
 @Setter
-public class Role {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Name;
-
+    private Integer id;
+    private Long userId;
+    private Integer movieId;
+    private LocalDateTime dateTimeCreated;
+    private String message;
 }

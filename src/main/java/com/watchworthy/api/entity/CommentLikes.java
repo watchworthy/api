@@ -7,13 +7,15 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="roles")
+@Entity(name = "commentLikes")
 @Getter
 @Setter
-public class Role {
+public class CommentLikes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Name;
+    private Integer id;
+    private Integer commentId;
+    private Long userId;
+    private Integer likesCount;
 
 }
