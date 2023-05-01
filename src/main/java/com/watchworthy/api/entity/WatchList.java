@@ -7,13 +7,14 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="roles")
+@Entity(name = "watchlists")
 @Getter
 @Setter
-public class Role {
+public class WatchList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Name;
-
+    private Integer id;
+    private Long userId;
+    private Integer movieId;
+    private boolean isWatched;
 }

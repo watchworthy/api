@@ -7,13 +7,12 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="roles")
+@Entity(name = "movieGenres")
 @Getter
 @Setter
-public class Role {
+public class MovieGenre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Name;
-
+    private Integer id;
+    private String name;
 }

@@ -7,13 +7,17 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity(name="roles")
+import java.time.LocalDateTime;
+
+@Entity(name = "notifications")
 @Getter
 @Setter
-public class Role {
+public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-    private String Name;
-
+    private Integer id;
+    private Long userId;
+    private String message;
+    private LocalDateTime dateTimeCreated;
+    private boolean isRead;
 }
