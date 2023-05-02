@@ -1,8 +1,12 @@
 package com.watchworthy.api.service.impl;
 
 import com.watchworthy.api.dto.MovieDTO;
+import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.entity.Movie;
+import com.watchworthy.api.entity.MovieGenre;
+import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
+import com.watchworthy.api.repository.MovieGenreRepository;
 import com.watchworthy.api.repository.MovieRepository;
 import com.watchworthy.api.repository.MovieSpecification;
 import com.watchworthy.api.service.MovieService;
@@ -20,6 +24,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final MovieGenreRepository movieGenreRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -27,8 +32,9 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.findById(movieId).orElse(null);
         if (movie != null) {
             return convertToDto(movie);
+        } else {
+            throw new MovieNotFoundException();
         }
-        return null;
     }
 
     @Override
@@ -50,7 +56,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void save(MovieDTO movieDTO)  {
+    public void save(MovieDTO movieDTO) {
         movieRepository.save(convertToEntity(movieDTO));
     }
 
@@ -68,6 +74,16 @@ public class MovieServiceImpl implements MovieService {
         }
     }
 
+    @Override
+    public void delete(Integer id) {
+        movieRepository.findById(id).ifPresent(movie -> movieRepository.deleteById(id));
+    }
+
+    @Override
+    public void addGenre(MovieGenreDTO movieGenreDTO) {
+        movieGenreRepository.save(movieGenreDTOToEntity(movieGenreDTO));
+    }
+
     public MovieDTO convertToDto(Movie movie) {
         return modelMapper.map(movie, MovieDTO.class);
     }
@@ -75,5 +91,14 @@ public class MovieServiceImpl implements MovieService {
     public Movie convertToEntity(MovieDTO movieDTO) {
         return modelMapper.map(movieDTO, Movie.class);
     }
+
+    public MovieGenre movieGenreDTOToEntity(MovieGenreDTO movieGenreDTO) {
+        return modelMapper.map(movieGenreDTO, MovieGenre.class);
+    }
+
+    public MovieGenreDTO movieGenreToDTO(MovieGenre movieGenre) {
+        return modelMapper.map(movieGenre, MovieGenreDTO.class);
+    }
+
 
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "movie")
 @Getter
@@ -25,5 +27,8 @@ public class Movie {
 
     @Column(name = "poster_path")
     private String posterPath;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
+    private Set<Genre> genres = new HashSet<>();
 
 }
