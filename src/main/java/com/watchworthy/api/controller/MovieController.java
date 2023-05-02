@@ -1,8 +1,11 @@
 package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.MovieDTO;
+import com.watchworthy.api.dto.MovieGenreDTO;
+import com.watchworthy.api.exception.EmptyValueExistException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,11 +36,22 @@ public class MovieController {
         movieService.save(movieDto);
     }
 
-    @RequestMapping(path = "/{id}",method = RequestMethod.PUT)
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public MovieDTO update(
             @PathVariable("id") Integer id,
             @RequestBody MovieDTO movieDto) {
-       return movieService.updateMovie(id,movieDto);
+        return movieService.updateMovie(id, movieDto);
     }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(
+            @PathVariable("id") Integer id) {
+        movieService.delete(id);
+    }
+
+    @RequestMapping(path = "/genre", method = RequestMethod.POST)
+    public void addGenre(
+            @RequestBody MovieGenreDTO movieGenreDTO) {
+        movieService.addGenre(movieGenreDTO);
+    }
 }

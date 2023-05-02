@@ -28,6 +28,7 @@ dependencies {
 //	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly('org.modelmapper:modelmapper:1.1.0')
 	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'io.github.openfeign:feign-okhttp:12.1'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
