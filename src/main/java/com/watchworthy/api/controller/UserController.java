@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private final UserService _userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
-        _userService = userService;
+        this.userService = userService;
     }
     @PostMapping("/signup")
     public ResponseEntity<BasicResponse> signUp(@RequestBody SignUpDTO signUpDTO) {
-        _userService.signUp(signUpDTO);
+        userService.signUp(signUpDTO);
 
         BasicResponse response = new BasicResponse(HttpStatus.OK, Controller.SIGN_UP_SUCCESS_MESSAGE);
         return new ResponseEntity<>(response, HttpStatus.OK);

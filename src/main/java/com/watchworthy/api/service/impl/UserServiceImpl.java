@@ -6,6 +6,7 @@ import com.watchworthy.api.exception.PasswordNotMatchException;
 import com.watchworthy.api.exception.UserAlreadyExistException;
 import com.watchworthy.api.repository.UserRepository;
 import com.watchworthy.api.service.UserService;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,16 +15,12 @@ import com.watchworthy.api.exception.EmptyValueExistException;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
-
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-    private final UserRepository _userRepository;
-    private PasswordEncoder _passwordEncoder;
-    public UserServiceImpl(UserRepository userRepository){
-
-        this._userRepository=userRepository;
-    }
+    private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void signUp(SignUpDTO signUpDTO) {
@@ -33,21 +30,22 @@ public class UserServiceImpl implements UserService {
         String password = Optional.ofNullable(signUpDTO.getPassword()).orElseThrow(EmptyValueExistException::new);
         String confirmPassword = Optional.ofNullable(signUpDTO.getConfirmPassword()).orElseThrow(EmptyValueExistException::new);
 
-        boolean alreadyExists = _userRepository.existsByEmail(email);
+        boolean alreadyExists = userRepository.existsByEmail(email);
         if(alreadyExists){
             throw new UserAlreadyExistException();
         }
         if(!password.equals(confirmPassword)){
             throw new PasswordNotMatchException();
         }
-        String encodedPassword = _passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(password);
         User newUser = new User(
           email,
           firstName,
           lastName,
                 encodedPassword
+
         );
         logger.info("Created User" + newUser);
-        _userRepository.save(newUser);
+        userRepository.save(newUser);
     }
 }
