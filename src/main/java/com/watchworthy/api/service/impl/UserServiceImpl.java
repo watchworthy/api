@@ -13,14 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.watchworthy.api.exception.EmptyValueExistException;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-    private final UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository _userRepository;
+    private final PasswordEncoder _passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
+        this._userRepository=userRepository;
+        _passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void signUp(SignUpDTO signUpDTO) {
