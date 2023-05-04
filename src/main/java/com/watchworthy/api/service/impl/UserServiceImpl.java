@@ -6,7 +6,6 @@ import com.watchworthy.api.exception.PasswordNotMatchException;
 import com.watchworthy.api.exception.UserAlreadyExistException;
 import com.watchworthy.api.repository.UserRepository;
 import com.watchworthy.api.service.UserService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.watchworthy.api.exception.EmptyValueExistException;
 
 import java.util.Optional;
-@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -22,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder _passwordEncoder;
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this._userRepository=userRepository;
-        _passwordEncoder = passwordEncoder;
+        this._passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,14 +31,14 @@ public class UserServiceImpl implements UserService {
         String password = Optional.ofNullable(signUpDTO.getPassword()).orElseThrow(EmptyValueExistException::new);
         String confirmPassword = Optional.ofNullable(signUpDTO.getConfirmPassword()).orElseThrow(EmptyValueExistException::new);
 
-        boolean alreadyExists = userRepository.existsByEmail(email);
+        boolean alreadyExists = _userRepository.existsByEmail(email);
         if(alreadyExists){
             throw new UserAlreadyExistException();
         }
         if(!password.equals(confirmPassword)){
             throw new PasswordNotMatchException();
         }
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = _passwordEncoder.encode(password);
         User newUser = new User(
           email,
           firstName,
@@ -49,6 +47,6 @@ public class UserServiceImpl implements UserService {
 
         );
         logger.info("Created User" + newUser);
-        userRepository.save(newUser);
+        _userRepository.save(newUser);
     }
 }
