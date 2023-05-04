@@ -1,5 +1,6 @@
 package com.watchworthy.api.service.impl;
 
+import com.watchworthy.api.dto.ChangePasswordDTO;
 import com.watchworthy.api.dto.SignUpDTO;
 import com.watchworthy.api.entity.User;
 import com.watchworthy.api.exception.PasswordNotMatchException;
@@ -49,4 +50,23 @@ public class UserServiceImpl implements UserService {
         logger.info("Created User" + newUser);
         _userRepository.save(newUser);
     }
+
+    @Override
+    public boolean changePassword(Long userId, ChangePasswordDTO changePasswordDTO) {
+        User user = _userRepository.findById(userId).orElse(null);
+        if(user == null){
+            return false;
+        }
+
+        if (_passwordEncoder.matches(changePasswordDTO.getCurrentPassword(), user.getPassword())) {
+            if(changePasswordDTO.getNewPassword().equals(changePasswordDTO.getConfirmNewPassword())){
+                String encodedNewPassword = _passwordEncoder.encode(changePasswordDTO.getNewPassword());
+                user.setPassword(encodedNewPassword);
+                _userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
