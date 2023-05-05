@@ -2,11 +2,16 @@ package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
+import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.exception.EmptyValueExistException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.MovieService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/movie")
@@ -53,5 +58,32 @@ public class MovieController {
     public void addGenre(
             @RequestBody MovieGenreDTO movieGenreDTO) {
         movieService.addGenre(movieGenreDTO);
+    }
+    @RequestMapping(path = "/addtowatchlist/{userId}/{movieId}", method = RequestMethod.POST)
+    public ResponseEntity<Void> addToWatchList(@PathVariable Long userId, @PathVariable Integer movieId) {
+       boolean result = movieService.addToWatchList(userId,movieId);
+       if(result){
+           return ResponseEntity.ok().build();
+       }else {
+           return ResponseEntity.badRequest().build();
+       }
+    }
+    @RequestMapping(path = "/removewatchlist/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removeWatchlist (@PathVariable Integer id){
+        boolean result = movieService.removeWatchList(id);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @RequestMapping(path = "/getwatchlistbyuserid/{userId}")
+    public ResponseEntity<List<Movie>> getWatchlistByUserId(@PathVariable("userId") Long userId) {
+        List<Movie> movies = movieService.getWatchListMoviesByUserId(userId);
+        if (movies.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(movies, HttpStatus.OK);
+        }
     }
 }

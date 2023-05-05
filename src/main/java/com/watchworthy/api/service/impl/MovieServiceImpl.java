@@ -4,19 +4,21 @@ import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.entity.MovieGenre;
+import com.watchworthy.api.entity.User;
+import com.watchworthy.api.entity.WatchList;
 import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
-import com.watchworthy.api.repository.MovieGenreRepository;
-import com.watchworthy.api.repository.MovieRepository;
-import com.watchworthy.api.repository.MovieSpecification;
+import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.MovieService;
 import io.micrometer.common.util.StringUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,6 +27,8 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieGenreRepository movieGenreRepository;
+    private final UserRepository userRepository;
+    private final WatchlistRepository watchlistRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -82,6 +86,39 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void addGenre(MovieGenreDTO movieGenreDTO) {
         movieGenreRepository.save(movieGenreDTOToEntity(movieGenreDTO));
+    }
+    @Override
+    public boolean addToWatchList(Long userId, Integer movieId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if(user==null){
+            return false;
+        }
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        if(movie == null){
+            return false;
+        }
+        WatchList watchList = new WatchList(
+                userId,
+                movieId,
+                false
+        );
+        watchlistRepository.save(watchList);
+        return true;
+    }
+
+    @Override
+    public List<Movie> getWatchListMoviesByUserId(Long userId) {
+        return movieRepository.getWatchlistByUserId(userId);
+    }
+
+    @Override
+    public boolean removeWatchList(Integer id) {
+        WatchList watchList = watchlistRepository.findById(id).orElse(null);
+        if(watchList == null){
+            return false;
+        }
+        watchlistRepository.delete(watchList);
+        return true;
     }
 
     public MovieDTO convertToDto(Movie movie) {
