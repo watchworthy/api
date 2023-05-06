@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/moviedb
+    url: jdbc:postgresql://127.0.0.1:40019/moviedb
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
@@ -45,6 +45,3 @@ service:
       tmdb-service: ${TMDB_URL:https://api.themoviedb.org/3/}
     secrets:
       tmdb-secret: ${TMBD_SECRET:14e1a56e4d03b85e51b78fcfd6e055ec}
-
-jwt:
-  secret: jwtsecret
