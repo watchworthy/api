@@ -8,5 +8,7 @@ public interface UserService {
     void signUp (SignUpDTO signUpDTO);
     boolean changePassword(Long userId, ChangePasswordDTO changePasswordDTO);
 
+    boolean changeUserStatus(Long userId, boolean isActive );
+
 
 }

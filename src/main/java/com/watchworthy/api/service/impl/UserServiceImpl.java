@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
           email,
           firstName,
           lastName,
-                encodedPassword
-
+                encodedPassword,
+                true
         );
         logger.info("Created User" + newUser);
         _userRepository.save(newUser);
@@ -67,6 +67,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean changeUserStatus(Long userId, boolean isActive) {
+        User user = _userRepository.findById(userId).orElse(null);
+        if(user == null) {
+            return false;
+        }
+        user.setActive(isActive);
+        _userRepository.save(user);
+        return true;
     }
 
 }

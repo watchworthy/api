@@ -34,4 +34,16 @@ public class UserController {
         }
     }
 
+    @PutMapping("/changeuserstatus/{userId}/{isActive}")
+    public ResponseEntity<Void> changeUserStatus(@PathVariable Long userId, @PathVariable boolean isActive ) {
+        boolean result = userService.changeUserStatus(userId,isActive);
+        if (result) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+
 }
