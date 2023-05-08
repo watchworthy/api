@@ -2,9 +2,10 @@ package com.watchworthy.api.service;
 
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
+import com.watchworthy.api.dto.WatchListDTO;
+import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.model.PageModel;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface MovieService {
     MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
     void delete(Integer id);
     void addGenre(MovieGenreDTO movieGenreDTO);
+    boolean addToWatchList(Long userId,Integer movieId);
+    List<WatchListDTO> getWatchListMoviesByUserId(Long userId);
+    boolean removeWatchList(Integer id);
 }
