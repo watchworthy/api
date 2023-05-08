@@ -7,13 +7,14 @@ import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.exception.EmptyValueExistException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.MovieService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Tag(name = "Movie", description = "Operations related to movies")
 @RestController
 @RequestMapping("/movie")
 public class MovieController {

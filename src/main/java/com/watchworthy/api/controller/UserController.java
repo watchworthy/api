@@ -6,12 +6,13 @@ import com.watchworthy.api.dto.ChangePasswordDTO;
 import com.watchworthy.api.dto.SignUpDTO;
 import com.watchworthy.api.exception.InvalidCredentialsException;
 import com.watchworthy.api.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.watchworthy.api.dto.TokenContainingResponse;
 import com.watchworthy.api.dto.LoginDTO;
-
+@Tag(name = "User", description = "Operations related to users")
 @RestController
 @RequestMapping("/user")
 public class UserController {

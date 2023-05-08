@@ -2,11 +2,13 @@ package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.GenreDTO;
 import com.watchworthy.api.service.GenreService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Tag(name = "Genre", description = "Operations related to genres")
 @RestController
 @RequestMapping("/genre")
 public class GenreController {
