@@ -2,6 +2,7 @@ package com.watchworthy.api.service.impl;
 
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
+import com.watchworthy.api.dto.WatchListDTO;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.entity.MovieGenre;
 import com.watchworthy.api.entity.User;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -107,8 +110,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getWatchListMoviesByUserId(Long userId) {
-        return movieRepository.getWatchlistByUserId(userId);
+    public List<WatchListDTO> getWatchListMoviesByUserId(Long userId) {
+        List<Object[]> results = movieRepository.getWatchlistByUserId(userId);
+        return results.stream()
+                .map(r -> new WatchListDTO((String) r[0], (String) r[1], (String) r[2], (LocalDate) r[3]))
+                .collect(Collectors.toList());
     }
 
     @Override
