@@ -4,6 +4,7 @@ import com.watchworthy.api.constant.Controller;
 import com.watchworthy.api.dto.BasicResponse;
 import com.watchworthy.api.dto.ChangePasswordDTO;
 import com.watchworthy.api.dto.SignUpDTO;
+import com.watchworthy.api.entity.User;
 import com.watchworthy.api.exception.InvalidCredentialsException;
 import com.watchworthy.api.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -64,5 +65,14 @@ public class UserController {
     }
 
 
+    @GetMapping("/profile/{email}")
+    public ResponseEntity<User> getUserProfile(@PathVariable String email) {
+        User user = userService.getUserProfile(email);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
