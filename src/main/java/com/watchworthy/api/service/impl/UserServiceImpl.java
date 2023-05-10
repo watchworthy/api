@@ -36,6 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
+
     @Override
     public void signUp(SignUpDTO signUpDTO) {
         String email = Optional.ofNullable(signUpDTO.getEmail()).orElseThrow(EmptyValueExistException::new);
@@ -114,5 +116,13 @@ public class UserServiceImpl implements UserService {
         _userRepository.save(user);
         return true;
     }
+
+    @Override
+    public User getUserProfile(String email) {
+        Optional<User> userOptional = _userRepository.findByEmail(email);
+        return userOptional.orElse(null);
+    }
+
+
 
 }
