@@ -3,10 +3,7 @@ package com.watchworthy.api.service.impl;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
-import com.watchworthy.api.entity.Movie;
-import com.watchworthy.api.entity.MovieGenre;
-import com.watchworthy.api.entity.User;
-import com.watchworthy.api.entity.WatchList;
+import com.watchworthy.api.entity.*;
 import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.*;
@@ -125,6 +122,16 @@ public class MovieServiceImpl implements MovieService {
         }
         watchlistRepository.delete(watchList);
         return true;
+    }
+
+    @Override
+    public Movie addCommentToMovie(Integer movieId, Comment comment) {
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        if(movie == null){
+            return null;
+        }
+        movie.addComment(comment);
+        return movieRepository.save(movie);
     }
 
     public MovieDTO convertToDto(Movie movie) {

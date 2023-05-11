@@ -3,6 +3,7 @@ package com.watchworthy.api.controller;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
+import com.watchworthy.api.entity.Comment;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.exception.EmptyValueExistException;
 import com.watchworthy.api.model.PageModel;
@@ -86,5 +87,16 @@ public class MovieController {
         } else {
             return new ResponseEntity<>(movies, HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(path = "/addcommenttomovie/{movieId}",method = RequestMethod.POST)
+    public ResponseEntity<Movie> addCommentToMovie(@PathVariable Integer movieId, @RequestBody Comment comment) {
+        Movie movie = movieService.addCommentToMovie(movieId, comment);
+        if (movie == null) {
+            // Movie not found, return 404 Not Found status
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(movie);
     }
 }
