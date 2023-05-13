@@ -1,5 +1,6 @@
 package com.watchworthy.api.service.impl;
 
+import com.watchworthy.api.dto.CommentDTO;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
@@ -17,6 +18,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +30,7 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieGenreRepository movieGenreRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final WatchlistRepository watchlistRepository;
     private final ModelMapper modelMapper;
@@ -125,18 +129,62 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie addCommentToMovie(Integer movieId, Comment comment) {
+    public boolean addCommentToMovies(Long userId, Integer movieId,String text) {
+        User user =userRepository.findById(userId).orElse(null);
         Movie movie = movieRepository.findById(movieId).orElse(null);
-        if(movie == null){
-            return null;
+        if(user == null || movie == null){
+            return false;
         }
-        movie.addComment(comment);
-        return movieRepository.save(movie);
+
+        Comment comment = new Comment();
+        comment.setFirstName(user.getFirstName());
+        comment.setLastName(user.getLastName());
+        comment.setMovie(movie);
+        comment.setUser(user);
+        comment.setText(text);
+        comment.setDateTimeCreated(LocalDateTime.now());
+
+        commentRepository.save(comment);
+        return true;
     }
 
-    public MovieDTO convertToDto(Movie movie) {
-        return modelMapper.map(movie, MovieDTO.class);
+    @Override
+    public boolean removeComment(Integer id) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if(comment == null){
+            return false;
+        }
+        commentRepository.delete(comment);
+        return true;
     }
+
+    @Override
+    public boolean updateComment(Integer id, String text) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if(comment == null){
+            return false;
+        }
+        comment.setText(text);
+        commentRepository.save(comment);
+        return true;
+    }
+
+
+    public MovieDTO convertToDto(Movie movie) {
+        MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
+
+        // Include the comments
+        List<CommentDTO> commentDTOs = new ArrayList<>();
+        for (Comment comment : movie.getComments()) {
+            CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+            commentDTOs.add(commentDTO);
+        }
+        movieDTO.setComments(commentDTOs);
+
+        return movieDTO;
+    }
+
+
 
     public Movie convertToEntity(MovieDTO movieDTO) {
         return modelMapper.map(movieDTO, Movie.class);

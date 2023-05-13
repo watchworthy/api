@@ -21,5 +21,7 @@ public interface MovieService {
     boolean addToWatchList(Long userId,Integer movieId);
     List<WatchListDTO> getWatchListMoviesByUserId(Long userId);
     boolean removeWatchList(Integer id);
-    Movie addCommentToMovie(Integer movieId, Comment comment);
+    boolean addCommentToMovies (Long userId , Integer movieId,String text);
+    boolean removeComment(Integer id);
+    boolean updateComment(Integer id, String text);
 }

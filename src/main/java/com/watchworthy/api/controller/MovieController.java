@@ -88,15 +88,34 @@ public class MovieController {
             return new ResponseEntity<>(movies, HttpStatus.OK);
         }
     }
-
-    @RequestMapping(path = "/addcommenttomovie/{movieId}",method = RequestMethod.POST)
-    public ResponseEntity<Movie> addCommentToMovie(@PathVariable Integer movieId, @RequestBody Comment comment) {
-        Movie movie = movieService.addCommentToMovie(movieId, comment);
-        if (movie == null) {
-            // Movie not found, return 404 Not Found status
-            return ResponseEntity.notFound().build();
+    @RequestMapping(path = "/addcommenttomovies/{movieId}/{userId}",method = RequestMethod.POST)
+    public ResponseEntity<Void> addCommentToMovies (@PathVariable Integer movieId, @PathVariable Long userId, @RequestBody String text){
+        boolean result =  movieService.addCommentToMovies(userId,movieId,text);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
         }
-
-        return ResponseEntity.ok(movie);
     }
+
+    @RequestMapping(path = "/removecomment/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removeComment (@PathVariable Integer id){
+        boolean result =  movieService.removeComment(id);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/updatecomment/{id}",method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateComment (@PathVariable Integer id, @RequestBody String text){
+        boolean result =  movieService.updateComment(id,text);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

@@ -33,15 +33,7 @@ public class Movie {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
     private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>();
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
-    public void addComment (Comment comment){
-        commentList.add(comment);
-        comment.setMovie(this);
-    }
-    public void deleteComment (Comment comment){
-        commentList.remove(comment);
-        comment.setMovie(null);
-    }
 }
