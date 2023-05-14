@@ -1,17 +1,13 @@
 package com.watchworthy.api.controller;
 
 import com.watchworthy.api.constant.Controller;
-import com.watchworthy.api.dto.BasicResponse;
-import com.watchworthy.api.dto.ChangePasswordDTO;
-import com.watchworthy.api.dto.SignUpDTO;
+import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.User;
 import com.watchworthy.api.exception.InvalidCredentialsException;
 import com.watchworthy.api.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.watchworthy.api.dto.TokenContainingResponse;
-import com.watchworthy.api.dto.LoginDTO;
 
 @RestController
 @RequestMapping("/user")
@@ -66,13 +62,24 @@ public class UserController {
 
 
     @GetMapping("/profile/{email}")
-    public ResponseEntity<User> getUserProfile(@PathVariable String email) {
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable String email) {
         User user = userService.getUserProfile(email);
         if (user != null) {
-            return ResponseEntity.ok(user);
+            UserDTO userDTO = mapUserToDTO(user);
+            return ResponseEntity.ok(userDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private UserDTO mapUserToDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setActive(user.isActive());
+        return userDTO;
     }
 
 }
