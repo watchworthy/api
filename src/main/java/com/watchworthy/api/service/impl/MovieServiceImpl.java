@@ -1,9 +1,6 @@
 package com.watchworthy.api.service.impl;
 
-import com.watchworthy.api.dto.CommentDTO;
-import com.watchworthy.api.dto.MovieDTO;
-import com.watchworthy.api.dto.MovieGenreDTO;
-import com.watchworthy.api.dto.WatchListDTO;
+import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.*;
 import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
@@ -129,7 +126,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public boolean addCommentToMovies(Long userId, Integer movieId,String text) {
+    public boolean addCommentToMovies(Long userId, Integer movieId, AddCommentDTO addCommentDTO) {
         User user =userRepository.findById(userId).orElse(null);
         Movie movie = movieRepository.findById(movieId).orElse(null);
         if(user == null || movie == null){
@@ -141,7 +138,7 @@ public class MovieServiceImpl implements MovieService {
         comment.setLastName(user.getLastName());
         comment.setMovie(movie);
         comment.setUser(user);
-        comment.setText(text);
+        comment.setText(addCommentDTO.getText());
         comment.setDateTimeCreated(LocalDateTime.now());
 
         commentRepository.save(comment);

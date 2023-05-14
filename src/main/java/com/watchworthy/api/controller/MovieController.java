@@ -1,5 +1,6 @@
 package com.watchworthy.api.controller;
 
+import com.watchworthy.api.dto.AddCommentDTO;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
@@ -89,8 +90,8 @@ public class MovieController {
         }
     }
     @RequestMapping(path = "/addcommenttomovies/{movieId}/{userId}",method = RequestMethod.POST)
-    public ResponseEntity<Void> addCommentToMovies (@PathVariable Integer movieId, @PathVariable Long userId, @RequestBody String text){
-        boolean result =  movieService.addCommentToMovies(userId,movieId,text);
+    public ResponseEntity<Void> addCommentToMovies (@PathVariable Integer movieId, @PathVariable Long userId, @RequestBody AddCommentDTO addCommentDTO){
+        boolean result =  movieService.addCommentToMovies(userId,movieId,addCommentDTO);
         if(result){
             return ResponseEntity.ok().build();
         }else {

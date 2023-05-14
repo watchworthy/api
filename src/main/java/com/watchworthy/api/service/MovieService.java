@@ -1,5 +1,6 @@
 package com.watchworthy.api.service;
 
+import com.watchworthy.api.dto.AddCommentDTO;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
@@ -21,7 +22,7 @@ public interface MovieService {
     boolean addToWatchList(Long userId,Integer movieId);
     List<WatchListDTO> getWatchListMoviesByUserId(Long userId);
     boolean removeWatchList(Integer id);
-    boolean addCommentToMovies (Long userId , Integer movieId,String text);
+    boolean addCommentToMovies (Long userId , Integer movieId, AddCommentDTO addCommentDTO);
     boolean removeComment(Integer id);
     boolean updateComment(Integer id, String text);
 }
