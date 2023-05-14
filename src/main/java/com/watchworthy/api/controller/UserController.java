@@ -62,24 +62,23 @@ public class UserController {
 
 
     @GetMapping("/profile/{email}")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable String email) {
+    public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable String email) {
         User user = userService.getUserProfile(email);
         if (user != null) {
-            UserDTO userDTO = mapUserToDTO(user);
-            return ResponseEntity.ok(userDTO);
+            UserProfileDTO userProfileDTO = mapUserToDTO(user);
+            return ResponseEntity.ok(userProfileDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    private UserDTO mapUserToDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(user.getId());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setActive(user.isActive());
-        return userDTO;
+    private UserProfileDTO mapUserToDTO(User user) {
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setUserId(user.getId());
+        userProfileDTO.setEmail(user.getEmail());
+        userProfileDTO.setFirstName(user.getFirstName());
+        userProfileDTO.setLastName(user.getLastName());
+        return userProfileDTO;
     }
 
 }
