@@ -1,5 +1,6 @@
 package com.watchworthy.api.dto;
 
+import com.watchworthy.api.entity.Comment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -22,5 +23,5 @@ public class MovieDTO {
     private LocalDate releaseDate;
     private String posterPath;
     private List<GenreDTO> genres;
-
+    private List<CommentDTO> comments;
 }

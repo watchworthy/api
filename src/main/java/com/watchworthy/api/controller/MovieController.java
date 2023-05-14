@@ -1,8 +1,10 @@
 package com.watchworthy.api.controller;
 
+import com.watchworthy.api.dto.AddCommentDTO;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.MovieGenreDTO;
 import com.watchworthy.api.dto.WatchListDTO;
+import com.watchworthy.api.entity.Comment;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.exception.EmptyValueExistException;
 import com.watchworthy.api.model.PageModel;
@@ -87,4 +89,34 @@ public class MovieController {
             return new ResponseEntity<>(movies, HttpStatus.OK);
         }
     }
+    @RequestMapping(path = "/addcommenttomovies/{movieId}/{userId}",method = RequestMethod.POST)
+    public ResponseEntity<Void> addCommentToMovies (@PathVariable Integer movieId, @PathVariable Long userId, @RequestBody AddCommentDTO addCommentDTO){
+        boolean result =  movieService.addCommentToMovies(userId,movieId,addCommentDTO);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/removecomment/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removeComment (@PathVariable Integer id){
+        boolean result =  movieService.removeComment(id);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/updatecomment/{id}",method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateComment (@PathVariable Integer id, @RequestBody String text){
+        boolean result =  movieService.updateComment(id,text);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
