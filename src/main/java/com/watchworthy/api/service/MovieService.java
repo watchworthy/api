@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public interface MovieService {
     MovieDTO getMovieDetails(Integer movieId);
+    Movie findById(Integer movieId);
     PageModel<MovieDTO> getMovies(Integer page, Integer size, String q);
     void save(MovieDTO movieDTO);
     MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
@@ -25,4 +26,5 @@ public interface MovieService {
     boolean addCommentToMovies (Long userId , Integer movieId, AddCommentDTO addCommentDTO);
     boolean removeComment(Integer id);
     boolean updateComment(Integer id, String text);
+    void rateMovie(Movie movie, Integer rating);
 }

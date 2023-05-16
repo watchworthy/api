@@ -43,6 +43,16 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie findById(Integer movieId) {
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        if (movie != null) {
+            return movie;
+        } else {
+            throw new MovieNotFoundException();
+        }
+    }
+
+    @Override
     public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q) {
         page = page != null ? Math.max(page - 1, 0) : 0;
         size = size != null && size > 0 ? size : 20;
@@ -166,6 +176,20 @@ public class MovieServiceImpl implements MovieService {
         return true;
     }
 
+    public void rateMovie(Movie movie, Integer rating) {
+        if (movie.getAverageRating() == null) {
+            movie.setAverageRating(0.0);
+        }
+
+        List<Integer> ratings = new ArrayList<>();
+        if (movie.getAverageRating() > 0) {
+            ratings.add((int) Math.round(movie.getAverageRating()));
+        }
+        ratings.add(rating);
+
+        movie.calculateAverageRating(ratings);
+        movieRepository.save(movie);
+    }
 
     public MovieDTO convertToDto(Movie movie) {
         MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
