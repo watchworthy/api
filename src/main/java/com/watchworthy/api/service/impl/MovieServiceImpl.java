@@ -180,7 +180,6 @@ public class MovieServiceImpl implements MovieService {
         if (movie.getAverageRating() == null) {
             movie.setAverageRating(0.0);
         }
-
         List<Integer> ratings = new ArrayList<>();
         if (movie.getAverageRating() > 0) {
             ratings.add((int) Math.round(movie.getAverageRating()));

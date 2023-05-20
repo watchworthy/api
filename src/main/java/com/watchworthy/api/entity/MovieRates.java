@@ -17,5 +17,5 @@ public class MovieRates {
     private Integer id;
     private Long userId;
     private Integer movieId;
-    private Integer rateNum;
+    private Double rateNum;
 }
