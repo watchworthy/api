@@ -26,5 +26,4 @@ public interface MovieService {
     boolean addCommentToMovies (Long userId , Integer movieId, AddCommentDTO addCommentDTO);
     boolean removeComment(Integer id);
     boolean updateComment(Integer id, String text);
-    void rateMovie(Movie movie, Integer rating);
 }

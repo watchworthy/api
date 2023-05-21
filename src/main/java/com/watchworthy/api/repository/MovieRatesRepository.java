@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MovieRatesRepository extends JpaRepository<MovieRates, Integer> {
     List<MovieRates> findByMovieId(Integer movieId);
-
+    MovieRates findByUserIdAndMovieId(Long userId, Integer movieId);
 }

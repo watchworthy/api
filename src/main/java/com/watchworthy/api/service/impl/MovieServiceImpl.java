@@ -175,21 +175,6 @@ public class MovieServiceImpl implements MovieService {
         commentRepository.save(comment);
         return true;
     }
-
-    public void rateMovie(Movie movie, Integer rating) {
-        if (movie.getAverageRating() == null) {
-            movie.setAverageRating(0.0);
-        }
-        List<Integer> ratings = new ArrayList<>();
-        if (movie.getAverageRating() > 0) {
-            ratings.add((int) Math.round(movie.getAverageRating()));
-        }
-        ratings.add(rating);
-
-        movie.calculateAverageRating(ratings);
-        movieRepository.save(movie);
-    }
-
     public MovieDTO convertToDto(Movie movie) {
         MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
 

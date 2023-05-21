@@ -29,6 +29,13 @@ public class MovieRatesServiceImpl implements MovieRatesService {
         if (rateNum < 1 || rateNum > 5) {
             return false;
         }
+        MovieRates existingRating = movieRatesRepository.findByUserIdAndMovieId(userId, movieId);
+        if (existingRating != null) {
+            existingRating.setRateNum(rateNum);
+            movieRatesRepository.save(existingRating);
+            return true;
+        }
+
         MovieRates movieRates = new MovieRates();
         movieRates.setMovieId(movieId);
         movieRates.setUserId(userId);
@@ -40,7 +47,7 @@ public class MovieRatesServiceImpl implements MovieRatesService {
     public double calculateMovieRateNum(Integer movieId) {
         List<MovieRates> movieRatesList = movieRatesRepository.findByMovieId(movieId);
         if (movieRatesList.isEmpty()) {
-            return 0.0; // Return 0 if there are no ratings for the movie
+            return 0.0;
         }
 
         double totalRating = 0.0;
@@ -51,4 +58,13 @@ public class MovieRatesServiceImpl implements MovieRatesService {
         return totalRating / ((List<?>) movieRatesList).size();
     }
 
+    @Override
+    public boolean removeMovieRate(Long userId , Integer movieId) {
+        MovieRates existingRating = movieRatesRepository.findByUserIdAndMovieId(userId, movieId);
+        if(existingRating != null){
+            movieRatesRepository.delete(existingRating);
+            return true;
+        }
+        return false;
+    }
 }

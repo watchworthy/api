@@ -119,21 +119,4 @@ public class MovieController {
         }
     }
 
-    @PostMapping("/{movieId}/rate")
-    public ResponseEntity<String> rateMovie(@PathVariable Integer movieId, @RequestParam Integer rating) {
-        Movie movie = movieService.findById(movieId);
-
-        if (movie == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (rating < 1 || rating > 5) {
-            return ResponseEntity.badRequest().body("Invalid rating. Rating should be between 1 and 5.");
-        }
-
-        movieService.rateMovie(movie, rating);
-
-        return ResponseEntity.ok("Movie rated successfully.");
-    }
-
 }

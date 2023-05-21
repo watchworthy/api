@@ -23,9 +23,19 @@ public class MovieRatesController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/{movieId}/average-rating")
+    @RequestMapping(path = "average-rating/{movieId}", method = RequestMethod.GET)
     public ResponseEntity<Double> calculateAverageRating(@PathVariable("movieId") Integer movieId) {
         double averageRating = movieRatesService.calculateMovieRateNum(movieId);
         return ResponseEntity.ok(averageRating);
+    }
+
+    @RequestMapping(path = "/removemovierate/{movieId}/{userId}",method = RequestMethod.POST)
+    public ResponseEntity<Void> removeMovieRate (@PathVariable Integer movieId, @PathVariable Long userId){
+        boolean result =  movieRatesService.removeMovieRate(userId,movieId);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
