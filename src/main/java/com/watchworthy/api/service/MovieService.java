@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public interface MovieService {
     MovieDTO getMovieDetails(Integer movieId);
+    Movie findById(Integer movieId);
     PageModel<MovieDTO> getMovies(Integer page, Integer size, String q);
     void save(MovieDTO movieDTO);
     MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
