@@ -27,6 +27,7 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
     private final MovieGenreRepository movieGenreRepository;
+    private final MoviePersonRepository moviePersonRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final WatchlistRepository watchlistRepository;
@@ -175,6 +176,12 @@ public class MovieServiceImpl implements MovieService {
         commentRepository.save(comment);
         return true;
     }
+
+    @Override
+    public void addPersonToMovie(MoviePersonDTO moviePersonDTO) {
+        moviePersonRepository.save(moviePersonDTOToEntity(moviePersonDTO));
+    }
+
     public MovieDTO convertToDto(Movie movie) {
         MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
 
@@ -201,6 +208,14 @@ public class MovieServiceImpl implements MovieService {
 
     public MovieGenreDTO movieGenreToDTO(MovieGenre movieGenre) {
         return modelMapper.map(movieGenre, MovieGenreDTO.class);
+    }
+
+    public MoviePerson moviePersonDTOToEntity(MoviePersonDTO moviePersonDTO) {
+        return modelMapper.map(moviePersonDTO, MoviePerson.class);
+    }
+
+    public MoviePersonDTO moviePersonToDto(MoviePerson moviePerson) {
+        return modelMapper.map(moviePerson, MoviePersonDTO.class);
     }
 
 

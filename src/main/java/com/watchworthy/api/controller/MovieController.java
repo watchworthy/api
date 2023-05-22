@@ -1,9 +1,6 @@
 package com.watchworthy.api.controller;
 
-import com.watchworthy.api.dto.AddCommentDTO;
-import com.watchworthy.api.dto.MovieDTO;
-import com.watchworthy.api.dto.MovieGenreDTO;
-import com.watchworthy.api.dto.WatchListDTO;
+import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.Comment;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.exception.EmptyValueExistException;
@@ -117,6 +114,12 @@ public class MovieController {
         }else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @RequestMapping(path = "/person", method = RequestMethod.POST)
+    public void addPerson(
+            @RequestBody MoviePersonDTO moviePersonDTO) {
+        movieService.addPersonToMovie(moviePersonDTO);
     }
 
 }
