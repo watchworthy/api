@@ -36,6 +36,9 @@ public class Movie {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
     private Set<Genre> genres = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
+    private Set<Person> people = new HashSet<>();
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments;
 
