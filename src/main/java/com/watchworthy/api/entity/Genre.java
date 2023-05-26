@@ -21,4 +21,10 @@ public class Genre {
             joinColumns = {@JoinColumn(name = "genre_id")},
             inverseJoinColumns = {@JoinColumn(name = "movie_id")})
     private Set<Movie> movies = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tvshow_genre",
+            joinColumns = {@JoinColumn(name = "genre_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tvshow_id")})
+    private Set<TvShow> tvshows = new HashSet<>();
 }
