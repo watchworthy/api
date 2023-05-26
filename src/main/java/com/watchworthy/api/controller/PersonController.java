@@ -1,6 +1,8 @@
 package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.PersonDTO;
+import com.watchworthy.api.dto.TvShowDTO;
+import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +34,13 @@ public class PersonController {
         return personService.getPerson(id);
     }
 
-    @GetMapping
-    public List<PersonDTO> getPersons() {
-        return personService.getPersons();
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public PageModel<PersonDTO> getPersons(
+            @RequestParam(name = "page", defaultValue = "1") Integer page,
+            @RequestParam(name = "size", defaultValue = "20") Integer size,
+            @RequestParam(name = "q", defaultValue = "") String q
+    ) {
+        return personService.getPersons(page, size, q);
     }
 
     @DeleteMapping("/{id}")

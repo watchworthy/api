@@ -1,10 +1,20 @@
 package com.watchworthy.api.service.impl;
 
 import com.watchworthy.api.dto.PersonDTO;
+import com.watchworthy.api.dto.TvShowDTO;
 import com.watchworthy.api.entity.Person;
+import com.watchworthy.api.entity.TvShow;
+import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.PersonRepository;
+import com.watchworthy.api.repository.PersonSpecification;
+import com.watchworthy.api.repository.TvShowSpecification;
 import com.watchworthy.api.service.PersonService;
+import io.micrometer.common.util.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,9 +52,21 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<PersonDTO> getPersons() {
-        List<Person> persons = personRepository.findAll();
-        return persons.stream().map(this::convertToDto).collect(Collectors.toList());
+    public PageModel<PersonDTO> getPersons(Integer page, Integer size, String q) {
+        page = page != null ? Math.max(page - 1, 0) : 0;
+        size = size != null && size > 0 ? size : 20;
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Specification<Person> specification = StringUtils.isBlank(q) ? null : new PersonSpecification(q);
+        Page<Person> persons = personRepository.findAll(specification, pageable);
+
+        return PageModel.<PersonDTO>builder()
+                .total(persons.getTotalElements())
+                .size(persons.getSize())
+                .page(persons.getNumber() + 1)
+                .data(persons.map(this::convertToDto).getContent())
+                .build();
     }
 
     @Override

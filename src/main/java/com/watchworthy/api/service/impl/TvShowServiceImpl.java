@@ -2,12 +2,15 @@ package com.watchworthy.api.service.impl;
 
 import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.*;
-import com.watchworthy.api.repository.SeasonRepository;
-import com.watchworthy.api.repository.TvShowGenreRepository;
-import com.watchworthy.api.repository.TvShowPersonRepository;
-import com.watchworthy.api.repository.TvShowRepository;
+import com.watchworthy.api.model.PageModel;
+import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.TvShowService;
+import io.micrometer.common.util.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,9 +51,21 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public List<TvShowDTO> getTvShows() {
-        List<TvShow> tvShows = tvShowRepository.findAll();
-        return tvShows.stream().map(this::convertToDto).collect(Collectors.toList());
+    public PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q) {
+        page = page != null ? Math.max(page - 1, 0) : 0;
+        size = size != null && size > 0 ? size : 20;
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Specification<TvShow> specification = StringUtils.isBlank(q) ? null : new TvShowSpecification(q);
+        Page<TvShow> tvShows = tvShowRepository.findAll(specification, pageable);
+
+        return PageModel.<TvShowDTO>builder()
+                .total(tvShows.getTotalElements())
+                .size(tvShows.getSize())
+                .page(tvShows.getNumber() + 1)
+                .data(tvShows.map(this::convertToDto).getContent())
+                .build();
     }
 
     @Override
