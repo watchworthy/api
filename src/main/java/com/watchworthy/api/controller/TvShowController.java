@@ -1,6 +1,7 @@
 package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.*;
+import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.EpisodeService;
 import com.watchworthy.api.service.SeasonService;
 import com.watchworthy.api.service.TvShowService;
@@ -45,10 +46,13 @@ public class TvShowController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity<List<TvShowDTO>> getTvShows() {
-        List<TvShowDTO> tvShows = tvShowService.getTvShows();
-        return ResponseEntity.status(HttpStatus.OK).body(tvShows);
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public PageModel<TvShowDTO> getMovies(
+            @RequestParam(name = "page", defaultValue = "1") Integer page,
+            @RequestParam(name = "size", defaultValue = "20") Integer size,
+            @RequestParam(name = "q", defaultValue = "") String q
+    ) {
+        return tvShowService.getTvShows(page, size, q);
     }
 
     @DeleteMapping("/{tvId}")
@@ -71,7 +75,7 @@ public class TvShowController {
 
     @PostMapping("/season/{tvId}")
     public ResponseEntity<Void> createSeason(@PathVariable("tvId") Integer tvId, @RequestBody SeasonDTO seasonDTO) {
-        seasonService.save(tvId,seasonDTO);
+        seasonService.save(tvId, seasonDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -98,26 +102,26 @@ public class TvShowController {
     }
 
     @DeleteMapping("/season/{tvId}/{id}")
-    public ResponseEntity<Void> deleteSeason(@PathVariable("tvId") Integer tvId,@PathVariable("id") Integer seasonId) {
+    public ResponseEntity<Void> deleteSeason(@PathVariable("tvId") Integer tvId, @PathVariable("id") Integer seasonId) {
         seasonService.delete(seasonId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
     @PostMapping("/season/{tvId}/{seasonNumber}/episode")
-    public ResponseEntity<Void> createEpisode(@PathVariable("tvId") Integer tvId,@PathVariable Integer seasonNumber,@RequestBody EpisodeDTO episodeDTO) {
-        episodeService.save(tvId,seasonNumber,episodeDTO);
+    public ResponseEntity<Void> createEpisode(@PathVariable("tvId") Integer tvId, @PathVariable Integer seasonNumber, @RequestBody EpisodeDTO episodeDTO) {
+        episodeService.save(tvId, seasonNumber, episodeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/season/{tvId}/{seasonNumber}/episode/{id}")
-    public ResponseEntity<Void> updateEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber,@PathVariable("id") Integer episodeId, @RequestBody EpisodeDTO episodeDTO) {
+    public ResponseEntity<Void> updateEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber, @PathVariable("id") Integer episodeId, @RequestBody EpisodeDTO episodeDTO) {
         episodeService.update(episodeId, episodeDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/season/{tvId}/{seasonNumber}/episode/{id}")
-    public ResponseEntity<EpisodeDTO> getEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber,@PathVariable("id") Integer episodeId) {
+    public ResponseEntity<EpisodeDTO> getEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber, @PathVariable("id") Integer episodeId) {
         EpisodeDTO episodeDTO = episodeService.getEpisode(episodeId);
         if (episodeDTO != null) {
             return ResponseEntity.status(HttpStatus.OK).body(episodeDTO);
@@ -128,12 +132,12 @@ public class TvShowController {
 
     @GetMapping("/season/{tvId}/{seasonNumber}/episode")
     public ResponseEntity<List<EpisodeDTO>> getEpisodes(@PathVariable("tvId") Integer tvId, @PathVariable Integer seasonNumber) {
-        List<EpisodeDTO> episodeDTOs = episodeService.getEpisodes(tvId,seasonNumber);
+        List<EpisodeDTO> episodeDTOs = episodeService.getEpisodes(tvId, seasonNumber);
         return ResponseEntity.status(HttpStatus.OK).body(episodeDTOs);
     }
 
     @DeleteMapping("/season/{tvId}/{seasonNumber}/episode/{id}")
-    public ResponseEntity<Void> deleteEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber,@PathVariable("id") Integer episodeId) {
+    public ResponseEntity<Void> deleteEpisode(@PathVariable("tvId") Integer tvId, @PathVariable String seasonNumber, @PathVariable("id") Integer episodeId) {
         episodeService.delete(episodeId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
