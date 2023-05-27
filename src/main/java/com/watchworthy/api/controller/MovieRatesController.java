@@ -15,7 +15,7 @@ public class MovieRatesController {
     }
 
     @RequestMapping(path = "/ratemovie/{movieId}/{userId}",method = RequestMethod.POST)
-    public ResponseEntity<Void> addCommentToMovies (@PathVariable Integer movieId, @PathVariable Long userId, @RequestParam Double rateNum){
+    public ResponseEntity<Void> rateMovie (@PathVariable Integer movieId, @PathVariable Long userId, @RequestParam Double rateNum){
         boolean result =  movieRatesService.rateMovie(userId,movieId,rateNum);
         if(result){
             return ResponseEntity.ok().build();
