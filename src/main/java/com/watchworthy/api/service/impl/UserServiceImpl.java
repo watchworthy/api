@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidCredentialsException("Invalid credentials provided.");
         }
 
-        return _jwtUtil.generateToken(email);
+        return _jwtUtil.generateToken(user.get().getId(),email);
     }
 
     @Override
