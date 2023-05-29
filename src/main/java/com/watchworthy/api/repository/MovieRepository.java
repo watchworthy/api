@@ -3,6 +3,7 @@ package com.watchworthy.api.repository;
 import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.WatchListDTO;
 import com.watchworthy.api.entity.Movie;
+import com.watchworthy.api.entity.MoviePerson;
 import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

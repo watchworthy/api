@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,24 @@ public class TvShowServiceImpl implements TvShowService {
                 .page(tvShows.getNumber() + 1)
                 .data(tvShows.map(this::convertToDto).getContent())
                 .build();
+    }
+
+    @Override
+    public List<TvShowDTO> getTvShowsByPerson(Integer personId) {
+        List<TvShowPerson> tvShowPersonList = tvShowPersonRepository.findByPersonId(personId);
+        List<TvShow> tvShows = new ArrayList<>();
+
+        for (TvShowPerson tvShowPerson : tvShowPersonList) {
+            Integer tvShowId = tvShowPerson.getTvshow().getId();
+            tvShowRepository.findById(tvShowId).ifPresent(tvShows::add);
+        }
+
+        List<TvShowDTO> tvShowDTOs = new ArrayList<>();
+        for(TvShow tvShow: tvShows){
+            TvShowDTO tvShowDTO = convertToDto(tvShow);
+            tvShowDTOs.add(tvShowDTO);
+        }
+        return tvShowDTOs;
     }
 
     @Override

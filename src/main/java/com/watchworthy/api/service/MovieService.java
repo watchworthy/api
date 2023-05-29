@@ -24,4 +24,5 @@ public interface MovieService {
     boolean removeComment(Integer id);
     boolean updateComment(Integer id, String text);
     void addPersonToMovie(MoviePersonDTO moviePersonDTO);
+    List<MovieDTO> getMoviesByPerson(Integer personId);
 }

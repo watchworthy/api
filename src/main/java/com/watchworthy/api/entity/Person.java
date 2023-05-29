@@ -37,4 +37,7 @@ public class Person {
             inverseJoinColumns = {@JoinColumn(name = "tvshow_id")})
     private Set<TvShow> tvshows = new HashSet<>();
 
+    @Column(name = "biography", length = 1000)
+    private String biography;
+
 }

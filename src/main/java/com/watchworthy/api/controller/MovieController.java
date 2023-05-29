@@ -122,4 +122,9 @@ public class MovieController {
         movieService.addPersonToMovie(moviePersonDTO);
     }
 
+    @RequestMapping(path = "/list/{personId}",method = RequestMethod.GET)
+    public List<MovieDTO> getMoviesByPersonId(@PathVariable("personId") Integer personId){
+        return movieService.getMoviesByPerson(personId);
+    }
+
 }

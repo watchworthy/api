@@ -197,6 +197,25 @@ public class MovieServiceImpl implements MovieService {
     }
 
 
+    @Override
+    public List<MovieDTO> getMoviesByPerson(Integer personId) {
+        List<MoviePerson> moviePersonList = moviePersonRepository.findByPersonId(personId);
+        List<Movie> movies = new ArrayList<>();
+
+        for (MoviePerson moviePerson : moviePersonList) {
+            Integer movieId = moviePerson.getMovie().getId();
+            movieRepository.findById(movieId).ifPresent(movies::add);
+        }
+
+        // Convert Movie objects to MovieDTO and return the list
+        List<MovieDTO> movieDTOs = new ArrayList<>();
+        for(Movie movie: movies){
+            MovieDTO movieDto = convertToDto(movie);
+            movieDTOs.add(movieDto);
+        }
+        return movieDTOs;
+    }
+
 
     public Movie convertToEntity(MovieDTO movieDTO) {
         return modelMapper.map(movieDTO, Movie.class);

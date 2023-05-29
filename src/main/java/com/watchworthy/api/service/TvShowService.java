@@ -17,4 +17,6 @@ public interface TvShowService {
     void addPersonToTvShow(TvShowPersonDTO tvShowPersonDTO);
 //    void getSeasons(Integer tvShowId);
 //    void getPeople(Integer tvShowId);
+    List<TvShowDTO> getTvShowsByPerson(Integer personId);
+
 }
