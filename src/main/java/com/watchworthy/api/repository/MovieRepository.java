@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer>, JpaSpecificationExecutor<Movie> {
-    @Query("SELECT m.title,m.overview , m.posterPath,m.releaseDate  from movie m join  watchlists w on m.id = w.movieId where w.userId = :userId")
+    @Query("SELECT m.id, m.title,m.overview , m.posterPath,m.releaseDate  from movie m join  watchlists w on m.id = w.movieId where w.userId = :userId")
     List<Object[]> getWatchlistByUserId(@Param("userId") Long userId);
 }
