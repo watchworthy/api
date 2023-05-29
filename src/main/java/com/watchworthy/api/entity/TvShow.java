@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity(name = "tv_show")
 @Getter
 @Setter
 public class TvShow {
