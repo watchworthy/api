@@ -1,5 +1,6 @@
 package com.watchworthy.api.service;
 
+import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.PersonDTO;
 import com.watchworthy.api.dto.TvShowDTO;
 import com.watchworthy.api.model.PageModel;

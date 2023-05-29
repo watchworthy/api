@@ -1,13 +1,13 @@
 package com.watchworthy.api.service.impl;
 
+import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.PersonDTO;
 import com.watchworthy.api.dto.TvShowDTO;
+import com.watchworthy.api.entity.Movie;
+import com.watchworthy.api.entity.MoviePerson;
 import com.watchworthy.api.entity.Person;
-import com.watchworthy.api.entity.TvShow;
 import com.watchworthy.api.model.PageModel;
-import com.watchworthy.api.repository.PersonRepository;
-import com.watchworthy.api.repository.PersonSpecification;
-import com.watchworthy.api.repository.TvShowSpecification;
+import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.PersonService;
 import io.micrometer.common.util.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -17,15 +17,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Service
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
+    private final MoviePersonRepository moviePersonRepository;
+    private final MovieRepository movieRepository;
+    private final TvShowRepository tvShowRepository;
+    private final TvShowPersonRepository tvShowPersonRepository;
     private final ModelMapper modelMapper;
 
-    public PersonServiceImpl(PersonRepository personRepository, ModelMapper modelMapper) {
+    public PersonServiceImpl(PersonRepository personRepository, MovieRepository movieRepository, TvShowRepository tvShowRepository, MoviePersonRepository moviePersonRepository, MovieRepository movieRepository1, TvShowRepository tvShowRepository1, TvShowPersonRepository tvShowPersonRepository, ModelMapper modelMapper) {
         this.personRepository = personRepository;
+        this.moviePersonRepository = moviePersonRepository;
+        this.movieRepository = movieRepository1;
+        this.tvShowRepository = tvShowRepository1;
+        this.tvShowPersonRepository = tvShowPersonRepository;
         this.modelMapper = modelMapper;
     }
 

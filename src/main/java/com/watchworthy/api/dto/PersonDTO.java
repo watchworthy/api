@@ -2,6 +2,8 @@ package com.watchworthy.api.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -11,4 +13,5 @@ public class PersonDTO {
     private String name;
     private String gender;
     private String posterPath;
+    private String biography;
 }

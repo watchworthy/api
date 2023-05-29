@@ -141,4 +141,8 @@ public class TvShowController {
         episodeService.delete(episodeId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    @RequestMapping(path = "/list/{personId}",method = RequestMethod.GET)
+    public List<TvShowDTO> getTvShowsByPersonId(@PathVariable("personId") Integer personId){
+        return tvShowService.getTvShowsByPerson(personId);
+    }
 }
