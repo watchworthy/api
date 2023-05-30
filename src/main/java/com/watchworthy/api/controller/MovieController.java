@@ -68,7 +68,7 @@ public class MovieController {
            return ResponseEntity.badRequest().build();
        }
     }
-    @RequestMapping(path = "/removewatchlist/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/removemoviefromwatchlist/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> removeMovieFromWatchlist (@PathVariable Integer id){
         boolean result = movieService.removeWatchList(id);
         if(result){

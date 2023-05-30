@@ -67,4 +67,18 @@ public class MovieRatesServiceImpl implements MovieRatesService {
         }
         return false;
     }
+
+    @Override
+    public Double findMovieRate(Long userId, Integer movieId) {
+        User useExists = userRepository.findById(userId).orElse(null);
+        Movie movieExists = movieRepository.findById(movieId).orElse(null);
+        if(useExists==null || movieExists==null){
+            return null;
+        }
+        MovieRates existingRating = movieRatesRepository.findByUserIdAndMovieId(userId, movieId);
+        if (existingRating != null) {
+            return existingRating.getRateNum();
+        }
+        return null;
+    }
 }

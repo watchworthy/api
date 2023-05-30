@@ -109,6 +109,11 @@ public class MovieServiceImpl implements MovieService {
         if(movie == null){
             return false;
         }
+
+        WatchList watchListExists = watchlistRepository.findByMovieIdAndUserId(movieId,userId);
+        if(watchListExists !=null){
+            return false;
+        }
         WatchList watchList = new WatchList(
                 userId,
                 movieId,
@@ -122,7 +127,7 @@ public class MovieServiceImpl implements MovieService {
     public List<WatchListDTO> getWatchListMoviesByUserId(Long userId) {
         List<Object[]> results = movieRepository.getWatchlistByUserId(userId);
         return results.stream()
-                .map(r -> new WatchListDTO((String) r[0], (String) r[1], (String) r[2], (LocalDate) r[3]))
+                .map(r -> new WatchListDTO((Integer) r[0], (String) r[1], (String) r[2], (String) r[3], (LocalDate) r[4],(Integer) r[5]))
                 .collect(Collectors.toList());
     }
 

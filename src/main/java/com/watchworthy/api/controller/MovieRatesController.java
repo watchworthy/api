@@ -28,6 +28,11 @@ public class MovieRatesController {
         double averageRating = movieRatesService.calculateMovieRateNum(movieId);
         return ResponseEntity.ok(averageRating);
     }
+    @RequestMapping(path = "getuserratenum/{movieId}/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<Double> calculateAverageRating(@PathVariable("movieId") Integer movieId, @PathVariable("userId") Long userId) {
+        double findRateNum = movieRatesService.findMovieRate(userId,movieId);
+        return ResponseEntity.ok(findRateNum);
+    }
 
     @RequestMapping(path = "/removemovierate/{movieId}/{userId}",method = RequestMethod.POST)
     public ResponseEntity<Void> removeMovieRate (@PathVariable Integer movieId, @PathVariable Long userId){
