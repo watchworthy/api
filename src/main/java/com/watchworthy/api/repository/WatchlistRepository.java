@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface WatchlistRepository extends JpaRepository<WatchList , Integer> {
-    WatchList findByMovieIdAndUserId(Long userId , Integer movieId);
+    WatchList findByMovieIdAndUserId(Integer movieId,Long userId);
 }

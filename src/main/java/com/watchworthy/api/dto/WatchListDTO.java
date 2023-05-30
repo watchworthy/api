@@ -17,5 +17,5 @@ public class WatchListDTO {
     private String overview;
     private String posterPath;
     private LocalDate releaseDate;
-
+    private Integer watchlistId;
 }
