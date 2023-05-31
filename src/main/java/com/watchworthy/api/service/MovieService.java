@@ -12,7 +12,7 @@ import java.util.List;
 public interface MovieService {
     MovieDTO getMovieDetails(Integer movieId);
     Movie findById(Integer movieId);
-    PageModel<MovieDTO> getMovies(Integer page, Integer size, String q);
+    PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, String genre);
     void save(MovieDTO movieDTO);
     MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
     void delete(Integer id);

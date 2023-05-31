@@ -50,9 +50,10 @@ public class TvShowController {
     public PageModel<TvShowDTO> getMovies(
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "size", defaultValue = "20") Integer size,
-            @RequestParam(name = "q", defaultValue = "") String q
+            @RequestParam(name = "q", defaultValue = "") String q,
+            @RequestParam(name = "genre", defaultValue = "") String genre
     ) {
-        return tvShowService.getTvShows(page, size, q);
+        return tvShowService.getTvShows(page, size, q,genre);
     }
 
     @DeleteMapping("/{tvId}")

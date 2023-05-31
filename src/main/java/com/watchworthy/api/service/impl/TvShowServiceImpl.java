@@ -52,13 +52,13 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q) {
+    public PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q, String genre) {
         page = page != null ? Math.max(page - 1, 0) : 0;
         size = size != null && size > 0 ? size : 20;
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Specification<TvShow> specification = StringUtils.isBlank(q) ? null : new TvShowSpecification(q);
+        TvShowSpecification specification = new TvShowSpecification(q,genre);
         Page<TvShow> tvShows = tvShowRepository.findAll(specification, pageable);
 
         return PageModel.<TvShowDTO>builder()
