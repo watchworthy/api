@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,13 +23,22 @@ public class TvShowServiceImpl implements TvShowService {
     private final TvShowRepository tvShowRepository;
     private final TvShowGenreRepository tvShowGenreRepository;
     private final TvShowPersonRepository tvShowPersonRepository;
+    private final UserRepository userRepository;
+
+    private final TvShowWatchlistRepository tvShowWatchlistRepository;
     private final ModelMapper modelMapper;
 
-    public TvShowServiceImpl(TvShowRepository tvShowRepository, SeasonRepository seasonRepository, TvShowGenreRepository tvShowGenreRepository, TvShowPersonRepository tvShowPersonRepository, ModelMapper modelMapper) {
+    public TvShowServiceImpl(TvShowRepository tvShowRepository,
+                             SeasonRepository seasonRepository,
+                             TvShowGenreRepository tvShowGenreRepository,
+                             TvShowPersonRepository tvShowPersonRepository,
+                             UserRepository userRepository, ModelMapper modelMapper, TvShowWatchlistRepository tvShowWatchlistRepository) {
         this.tvShowRepository = tvShowRepository;
         this.tvShowGenreRepository = tvShowGenreRepository;
         this.tvShowPersonRepository = tvShowPersonRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.tvShowWatchlistRepository = tvShowWatchlistRepository;
     }
 
     @Override
@@ -127,4 +137,47 @@ public class TvShowServiceImpl implements TvShowService {
     public TvShowPerson tvSHowPersonToEntity(TvShowPersonDTO tvShowPersonDTO) {
         return modelMapper.map(tvShowPersonDTO, TvShowPerson.class);
     }
+
+    @Override
+    public boolean addTvShowToWatchList(Long userId, Integer tvShowId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        TvShow tvShow = tvShowRepository.findById(tvShowId).orElse(null);
+        if (tvShow == null) {
+            return false;
+        }
+        TvShowWatchList tvShowWatchListExists = tvShowWatchlistRepository.findByTvShowIdAndUserId(tvShowId, userId);
+        if (tvShowWatchListExists != null) {
+            return false;
+        }
+        TvShowWatchList tvShowWatchList = new TvShowWatchList(
+                userId,
+                tvShowId,
+                false
+        );
+        tvShowWatchlistRepository.save(tvShowWatchList); // Use non-static instance
+        return true;
+    }
+
+
+    @Override
+    public List<TvShowWatchListDTO> getWatchListTvShowsByUserId(Long userId) {
+        List<Object[]> results = tvShowRepository.getWatchlistByUserId(userId);
+        return results.stream()
+                .map(r -> new TvShowWatchListDTO((Integer) r[0], (String) r[1], (String) r[2], (String) r[3], (LocalDate) r[4],(Integer) r[5]))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean removeTvShowfromWatchList(Integer id) {
+        TvShowWatchList tvShowWatchList = tvShowWatchlistRepository.findById(id).orElse(null);
+        if(tvShowWatchList == null){
+            return false;
+        }
+        tvShowWatchlistRepository.delete(tvShowWatchList);
+        return true;
+    }
+
 }

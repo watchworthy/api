@@ -9,22 +9,20 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "watchlists")
-public class WatchList {
+@Entity(name = "tvshow_watchlists")
+public class TvShowWatchList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Long userId;
-    private Integer movieId;
-
-
+    private Integer tvShowId;
     private boolean isWatched;
 
-    public WatchList(Long userId,Integer movieId,boolean isWatched){
+
+    public TvShowWatchList(Long userId,Integer tvShowId,boolean isWatched){
         this.userId=userId;
-        this.movieId=movieId;
+        this.tvShowId=tvShowId;
         this.isWatched =isWatched;
-//        this.tvShowId=tvShowId;
 
     }
 }
