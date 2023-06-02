@@ -145,4 +145,35 @@ public class TvShowController {
     public List<TvShowDTO> getTvShowsByPersonId(@PathVariable("personId") Integer personId){
         return tvShowService.getTvShowsByPerson(personId);
     }
+
+    @RequestMapping(path = "/addtvshowtowatchlist/{userId}/{tvShowId}", method = RequestMethod.POST)
+    public ResponseEntity<Void> addTvShowToWatchList(@PathVariable Long userId, @PathVariable Integer tvShowId) {
+        boolean result = tvShowService.addTvShowToWatchList(userId,tvShowId);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/removetvshowfromwatchlist/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removeTvShowFromWatchlist (@PathVariable Integer id){
+        boolean result = tvShowService.removeTvShowfromWatchList(id);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/gettvshowswatchlistbyuserid/{userId}",method = RequestMethod.GET)
+    public ResponseEntity<List<TvShowWatchListDTO>> getTvShowWatchlistByUserId(@PathVariable("userId") Long userId) {
+        List<TvShowWatchListDTO> tvShows = tvShowService.getWatchListTvShowsByUserId(userId);
+        if (tvShows.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(tvShows, HttpStatus.OK);
+        }
+    }
+
 }

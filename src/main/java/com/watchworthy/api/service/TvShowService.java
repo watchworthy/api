@@ -1,8 +1,6 @@
 package com.watchworthy.api.service;
 
-import com.watchworthy.api.dto.TvShowDTO;
-import com.watchworthy.api.dto.TvShowGenreDTO;
-import com.watchworthy.api.dto.TvShowPersonDTO;
+import com.watchworthy.api.dto.*;
 import com.watchworthy.api.model.PageModel;
 
 import java.util.List;
@@ -18,5 +16,10 @@ public interface TvShowService {
 //    void getSeasons(Integer tvShowId);
 //    void getPeople(Integer tvShowId);
     List<TvShowDTO> getTvShowsByPerson(Integer personId);
+
+
+    boolean addTvShowToWatchList(Long userId,Integer movieId);
+    List<TvShowWatchListDTO> getWatchListTvShowsByUserId(Long userId);
+    boolean removeTvShowfromWatchList(Integer id);
 
 }
