@@ -146,6 +146,8 @@ public class TvShowController {
         return tvShowService.getTvShowsByPerson(personId);
     }
 
+
+    //WatchList TVShow Methods
     @RequestMapping(path = "/addtvshowtowatchlist/{userId}/{tvShowId}", method = RequestMethod.POST)
     public ResponseEntity<Void> addTvShowToWatchList(@PathVariable Long userId, @PathVariable Integer tvShowId) {
         boolean result = tvShowService.addTvShowToWatchList(userId,tvShowId);
@@ -173,6 +175,39 @@ public class TvShowController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(tvShows, HttpStatus.OK);
+        }
+    }
+
+
+    //Comments TvSHows Stuff
+
+    @RequestMapping(path = "/addcommenttvshows/{tvShowId}/{userId}",method = RequestMethod.POST)
+    public ResponseEntity<Void> addCommentToTvShows (@PathVariable Integer tvShowId, @PathVariable Long userId, @RequestBody AddCommentDTO addCommentDTO){
+        boolean result =  tvShowService.addCommentToTvShows(userId,tvShowId,addCommentDTO);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/removecommenttvshows/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> removeCommentTvShows (@PathVariable Integer id){
+        boolean result =  tvShowService.removeCommentTvShows(id);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @RequestMapping(path = "/updatecommenttvshow/{id}",method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateCommentTvShows (@PathVariable Integer id, @RequestBody String text){
+        boolean result =  tvShowService.updateCommentTvShows(id,text);
+        if(result){
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.badRequest().build();
         }
     }
 

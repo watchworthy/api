@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,6 +24,7 @@ public class TvShowDTO {
     private int numberOfEpisodes;
     private boolean inProduction;
     private String status;
+    private List<CommentDTO> comments;
     private Set<SeasonDTO> seasons;
     private Set<GenreDTO> genres;
     private Set<PersonDTO> people;

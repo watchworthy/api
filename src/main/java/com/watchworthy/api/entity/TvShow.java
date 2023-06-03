@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "tv_show")
@@ -61,5 +62,11 @@ public class TvShow {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tvshows")
     private Set<Person> people = new HashSet<>();
+
+    //tv show comment
+
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
 
 }
