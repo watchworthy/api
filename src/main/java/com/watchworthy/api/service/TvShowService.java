@@ -22,4 +22,10 @@ public interface TvShowService {
     List<TvShowWatchListDTO> getWatchListTvShowsByUserId(Long userId);
     boolean removeTvShowfromWatchList(Integer id);
 
+    //comments stuff
+
+    boolean addCommentToTvShows (Long userId , Integer tvShowId, AddCommentDTO addCommentDTO);
+    boolean removeCommentTvShows(Integer id);
+    boolean updateCommentTvShows(Integer id, String text);
+
 }

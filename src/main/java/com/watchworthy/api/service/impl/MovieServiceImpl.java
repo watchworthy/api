@@ -145,7 +145,7 @@ public class MovieServiceImpl implements MovieService {
     public boolean addCommentToMovies(Long userId, Integer movieId, AddCommentDTO addCommentDTO) {
         User user =userRepository.findById(userId).orElse(null);
         Movie movie = movieRepository.findById(movieId).orElse(null);
-        if(user == null || movie == null){
+        if (user == null || movie == null || addCommentDTO.getText().trim().isEmpty()) {
             return false;
         }
 

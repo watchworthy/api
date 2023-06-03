@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class TvShowServiceImpl implements TvShowService {
     private final TvShowGenreRepository tvShowGenreRepository;
     private final TvShowPersonRepository tvShowPersonRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     private final TvShowWatchlistRepository tvShowWatchlistRepository;
     private final ModelMapper modelMapper;
@@ -32,13 +34,16 @@ public class TvShowServiceImpl implements TvShowService {
                              SeasonRepository seasonRepository,
                              TvShowGenreRepository tvShowGenreRepository,
                              TvShowPersonRepository tvShowPersonRepository,
-                             UserRepository userRepository, ModelMapper modelMapper, TvShowWatchlistRepository tvShowWatchlistRepository) {
+                             UserRepository userRepository, ModelMapper modelMapper,
+                             TvShowWatchlistRepository tvShowWatchlistRepository,
+                             CommentRepository commentRepository) {
         this.tvShowRepository = tvShowRepository;
         this.tvShowGenreRepository = tvShowGenreRepository;
         this.tvShowPersonRepository = tvShowPersonRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.tvShowWatchlistRepository = tvShowWatchlistRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -177,6 +182,49 @@ public class TvShowServiceImpl implements TvShowService {
             return false;
         }
         tvShowWatchlistRepository.delete(tvShowWatchList);
+        return true;
+    }
+
+    @Override
+    public boolean addCommentToTvShows(Long userId, Integer tvShowId, AddCommentDTO addCommentDTO) {
+        User user = userRepository.findById(userId).orElse(null);
+        TvShow tvShow = tvShowRepository.findById(tvShowId).orElse(null);
+
+        if (user == null || tvShow == null || addCommentDTO.getText().trim().isEmpty()) {
+            return false;
+        }
+
+        Comment comment = new Comment();
+        comment.setFirstName(user.getFirstName());
+        comment.setLastName(user.getLastName());
+        comment.setTvShow(tvShow);
+        comment.setUser(user);
+        comment.setText(addCommentDTO.getText());
+        comment.setDateTimeCreated(LocalDateTime.now());
+
+        commentRepository.save(comment);
+        return true;
+    }
+
+
+    @Override
+    public boolean removeCommentTvShows(Integer id) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if(comment == null){
+            return false;
+        }
+        commentRepository.delete(comment);
+        return true;
+    }
+
+    @Override
+    public boolean updateCommentTvShows(Integer id, String text) {
+        Comment comment = commentRepository.findById(id).orElse(null);
+        if(comment == null){
+            return false;
+        }
+        comment.setText(text);
+        commentRepository.save(comment);
         return true;
     }
 
