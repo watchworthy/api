@@ -9,7 +9,7 @@ public interface TvShowService {
     void save(TvShowDTO TvShowDTO);
     void update(Integer TvShowId ,TvShowDTO TvShowDTO);
     TvShowDTO getTvShow(Integer id);
-    PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q);
+    PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q, String genre);
     void delete(Integer id);
     void addGenre(TvShowGenreDTO tvShowGenreDTO);
     void addPersonToTvShow(TvShowPersonDTO tvShowPersonDTO);

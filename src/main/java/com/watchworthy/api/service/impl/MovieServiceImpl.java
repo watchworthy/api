@@ -6,12 +6,9 @@ import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.MovieService;
-import io.micrometer.common.util.StringUtils;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,14 +51,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q) {
+    public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, String genre) {
         page = page != null ? Math.max(page - 1, 0) : 0;
         size = size != null && size > 0 ? size : 20;
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Specification<Movie> specification = StringUtils.isBlank(q) ? null : new MovieSpecification(q);
-        Page<Movie> moviePage = movieRepository.findAll(specification, pageable);
+        MovieSpecification movieSpecification = new MovieSpecification(q,genre);
+        Page<Movie> moviePage = movieRepository.findAll(movieSpecification, pageable);
 
         return PageModel.<MovieDTO>builder()
                 .total(moviePage.getTotalElements())

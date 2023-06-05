@@ -31,9 +31,10 @@ public class MovieController {
     public PageModel<MovieDTO> getMovies(
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "size", defaultValue = "20") Integer size,
-            @RequestParam(name = "q", defaultValue = "") String q
+            @RequestParam(name = "q", defaultValue = "") String q,
+            @RequestParam(name = "genre", required = false) String genre
     ) {
-        return movieService.getMovies(page, size, q);
+        return movieService.getMovies(page, size, q,genre);
     }
 
     @RequestMapping(method = RequestMethod.POST)
