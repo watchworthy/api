@@ -32,9 +32,14 @@ public class MovieController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "size", defaultValue = "20") Integer size,
             @RequestParam(name = "q", defaultValue = "") String q,
-            @RequestParam(name = "genre", required = false) String genre
+            @RequestParam(name = "genre", required = false) Integer genre
     ) {
         return movieService.getMovies(page, size, q,genre);
+    }
+
+    @RequestMapping(path = "/upcoming", method = RequestMethod.GET)
+    public List<MovieDTO> getUpcomingMovies() {
+        return movieService.getUpcomingMovies();
     }
 
     @RequestMapping(method = RequestMethod.POST)
