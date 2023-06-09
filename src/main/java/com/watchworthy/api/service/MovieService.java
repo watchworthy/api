@@ -12,7 +12,7 @@ import java.util.List;
 public interface MovieService {
     MovieDTO getMovieDetails(Integer movieId);
     Movie findById(Integer movieId);
-    PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, String genre);
+    PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, Integer genre);
     void save(MovieDTO movieDTO);
     MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
     void delete(Integer id);
@@ -25,4 +25,10 @@ public interface MovieService {
     boolean updateComment(Integer id, String text);
     void addPersonToMovie(MoviePersonDTO moviePersonDTO);
     List<MovieDTO> getMoviesByPerson(Integer personId);
+
+    List<MovieDTO> getUpcomingMovies();
+
+    List<MovieDTO> getNowPlayingMovies();
+
+    List<MovieDTO> getPopularMovies();
 }

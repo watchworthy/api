@@ -51,7 +51,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, String genre) {
+    public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, Integer genre) {
         page = page != null ? Math.max(page - 1, 0) : 0;
         size = size != null && size > 0 ? size : 20;
 
@@ -216,6 +216,28 @@ public class MovieServiceImpl implements MovieService {
             movieDTOs.add(movieDto);
         }
         return movieDTOs;
+    }
+
+    @Override
+    public List<MovieDTO> getUpcomingMovies() {
+        LocalDate currentDate = LocalDate.now();
+        List<Movie> movies = movieRepository.findAll().stream().filter(x->x.getReleaseDate().isAfter(currentDate)).toList();
+        List<MovieDTO> movieDTOS = new ArrayList<>();
+        for(Movie movie : movies){
+            MovieDTO movieDTO =  convertToDto(movie);
+            movieDTOS.add(movieDTO);
+        }
+        return movieDTOS;
+    }
+
+    @Override
+    public List<MovieDTO> getNowPlayingMovies() {
+        return null;
+    }
+
+    @Override
+    public List<MovieDTO> getPopularMovies() {
+        return null;
     }
 
 
