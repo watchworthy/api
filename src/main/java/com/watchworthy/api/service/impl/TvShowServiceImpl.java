@@ -67,7 +67,7 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q, String genre) {
+    public PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q, Integer genre) {
         page = page != null ? Math.max(page - 1, 0) : 0;
         size = size != null && size > 0 ? size : 20;
 

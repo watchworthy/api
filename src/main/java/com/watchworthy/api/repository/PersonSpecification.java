@@ -1,10 +1,8 @@
 package com.watchworthy.api.repository;
 
 import com.watchworthy.api.entity.Person;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import com.watchworthy.api.entity.TvShow;
+import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,12 +11,14 @@ public class PersonSpecification implements Specification<Person> {
     private String searchString;
     @Override
     public Predicate toPredicate(Root<Person> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        return filterByTitle(root,criteriaBuilder);
+        return filterByName(root,criteriaBuilder);
     }
 
-    private Predicate filterByTitle(Root<Person> root, CriteriaBuilder criteriaBuilder){
+    private Predicate filterByName(Root<Person> root, CriteriaBuilder criteriaBuilder){
+        String searchStringToLower = searchString.toLowerCase();
+        Expression<String> nameToLower = criteriaBuilder.lower(root.get("name"));
         return criteriaBuilder.or(
-                criteriaBuilder.like(root.get("title"),"%" + searchString + "%")
+                criteriaBuilder.like(nameToLower,"%" + searchStringToLower + "%")
         );
     }
 }
