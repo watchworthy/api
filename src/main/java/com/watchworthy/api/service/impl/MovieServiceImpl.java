@@ -240,7 +240,6 @@ public class MovieServiceImpl implements MovieService {
         return null;
     }
 
-
     public Movie convertToEntity(MovieDTO movieDTO) {
         return modelMapper.map(movieDTO, Movie.class);
     }
