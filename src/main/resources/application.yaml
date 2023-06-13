@@ -49,3 +49,8 @@ service:
 
 jwt:
   secret: jwtsecret
+
+cloudinary:
+  cloud_name: dp4j5wdmp
+  api_key: 971638141475129
+  api_secret: BNFRcqYSniZp_D1gQT5S3oa9l40
