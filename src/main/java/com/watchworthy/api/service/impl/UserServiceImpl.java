@@ -5,32 +5,35 @@ import com.watchworthy.api.dto.LoginDTO;
 import com.watchworthy.api.dto.SignUpDTO;
 import com.watchworthy.api.entity.User;
 import com.watchworthy.api.exception.*;
+import com.watchworthy.api.model.EmailType;
 import com.watchworthy.api.repository.UserRepository;
+import com.watchworthy.api.service.EmailService;
 import com.watchworthy.api.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 import com.watchworthy.api.exception.InvalidCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import com.watchworthy.api.util.JwtUtil;
 
+import java.io.IOException;
 import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository _userRepository;
     private final PasswordEncoder _passwordEncoder;
+    private final EmailService emailService;
     private AuthenticationManager _authenticationManager;
     private JwtUtil _jwtUtil;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService, AuthenticationManager authenticationManager, JwtUtil jwtUtil){
         this._userRepository=userRepository;
         this._passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
         this._authenticationManager = authenticationManager;
         this._jwtUtil = jwtUtil;
     }
@@ -63,6 +66,11 @@ public class UserServiceImpl implements UserService {
         );
         logger.info("Created User" + newUser);
         _userRepository.save(newUser);
+        try {
+            emailService.sendEmail(newUser.getEmail(), newUser.getFirstName(), EmailType.WELCOME);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String login(LoginDTO loginDTO) throws Exception {
