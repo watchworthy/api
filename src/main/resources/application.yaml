@@ -34,6 +34,11 @@ spring:
         hbm2dll:
           create_namespaces: true
         default_schema: public
+  data:
+    redis:
+      host: localhost
+      port: 5003
+      time-to-live: PT30S
 
 
 server:

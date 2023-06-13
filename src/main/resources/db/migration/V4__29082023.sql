@@ -181,6 +181,7 @@ CREATE TABLE IF NOT EXISTS watchlists
     CONSTRAINT pk_watchlists PRIMARY KEY (id)
 );
 
+
 ALTER TABLE attendee
     ADD CONSTRAINT FK_ATTENDEE_ON_EVENT FOREIGN KEY (event_id) REFERENCES event (id);
 
