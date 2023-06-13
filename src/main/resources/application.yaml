@@ -45,6 +45,7 @@ service:
       tmdb-service: ${TMDB_URL:https://api.themoviedb.org/3/}
     secrets:
       tmdb-secret: ${TMBD_SECRET:14e1a56e4d03b85e51b78fcfd6e055ec}
+      sendInBlueKey: ${SENDINBLUE_KEY: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}
 
 jwt:
   secret: jwtsecret
