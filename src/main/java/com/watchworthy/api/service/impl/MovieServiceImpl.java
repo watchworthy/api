@@ -12,6 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +26,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class MovieServiceImpl implements MovieService {
+
+
 
     private final MovieRepository movieRepository;
     private final MovieGenreRepository movieGenreRepository;
@@ -271,6 +276,20 @@ public class MovieServiceImpl implements MovieService {
 
     public MoviePersonDTO moviePersonToDto(MoviePerson moviePerson) {
         return modelMapper.map(moviePerson, MoviePersonDTO.class);
+    }
+
+
+    @Override
+    @Transactional
+    public void updateMovieTrailer(Integer movieId, String trailerLink) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new MovieNotFoundException());
+        movie.setTrailerLink(trailerLink);
+        movieRepository.save(movie);
+    }
+
+    @Override
+    public void addTrailerLink(Integer movieId, String trailerLink) {
+
     }
 
 

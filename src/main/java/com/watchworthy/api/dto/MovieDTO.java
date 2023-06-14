@@ -19,6 +19,7 @@ public class MovieDTO {
     private String overview;
     private LocalDate releaseDate;
     private String posterPath;
+    private String trailerLink;
     private List<GenreDTO> genres;
     private List<CommentDTO> comments;
     private List<PersonDTO> people;

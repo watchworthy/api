@@ -33,6 +33,9 @@ public class Movie {
     @Column(name = "average_rating")
     private Double averageRating;
 
+    @Column(name = "trailer_link")
+    private String trailerLink;
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
     private Set<Genre> genres = new HashSet<>();
 

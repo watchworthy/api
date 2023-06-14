@@ -45,6 +45,7 @@ public class MovieController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody MovieDTO movieDto) {
+        movieDto.setTrailerLink(null);
         movieService.save(movieDto);
     }
 
@@ -138,5 +139,19 @@ public class MovieController {
     public void addPoster(@PathVariable Integer movieId,@RequestParam("file") MultipartFile file){
         movieService.addPoster(movieId,file);
     }
+
+    //endpoints per trailer
+
+    @RequestMapping(path = "/trailer/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> addTrailerLink(
+            @PathVariable("id") Integer id,
+            @RequestBody String trailerLink) {
+        movieService.addTrailerLink(id, trailerLink);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
 
 }

@@ -34,4 +34,8 @@ public interface MovieService {
     List<MovieDTO> getNowPlayingMovies();
 
     List<MovieDTO> getPopularMovies();
+
+    void updateMovieTrailer(Integer movieId, String trailerLink);
+
+    void addTrailerLink(Integer movieId, String trailerLink);
 }
