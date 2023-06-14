@@ -22,5 +22,6 @@ CREATE TABLE movie
     overview     VARCHAR(1000),
     release_date date,
     poster_path  VARCHAR(255),
+    trailer_link VARCHAR(1000),
     CONSTRAINT pk_movie PRIMARY KEY (id)
 );
