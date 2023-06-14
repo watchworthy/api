@@ -6,8 +6,10 @@ import com.watchworthy.api.entity.Season;
 import com.watchworthy.api.repository.EpisodeRepository;
 import com.watchworthy.api.repository.SeasonRepository;
 import com.watchworthy.api.service.EpisodeService;
+import com.watchworthy.api.service.StorageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,11 +20,13 @@ public class EpisodeServiceImpl implements EpisodeService {
     private final EpisodeRepository episodeRepository;
     private final SeasonRepository seasonRepository;
     private final ModelMapper modelMapper;
+    private final StorageService storageService;
 
-    public EpisodeServiceImpl(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, ModelMapper modelMapper) {
+    public EpisodeServiceImpl(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, ModelMapper modelMapper, StorageService storageService) {
         this.episodeRepository = episodeRepository;
         this.seasonRepository = seasonRepository;
         this.modelMapper = modelMapper;
+        this.storageService = storageService;
     }
 
     @Override
@@ -76,6 +80,16 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public void delete(Integer id) {
         episodeRepository.findById(id).ifPresent(episode -> episodeRepository.deleteById(id));
+    }
+
+    @Override
+    public void addPoster(Integer episodeId, MultipartFile file) {
+        String posterPath = storageService.uploadFile(file);
+        Episode episode = episodeRepository.findById(episodeId).orElse(null);
+        if(episode != null){
+            episode.setPosterPath(posterPath);
+            episodeRepository.save(episode);
+        }
     }
 
     public EpisodeDTO convertToDto(Episode episode) {

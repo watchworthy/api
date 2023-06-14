@@ -6,10 +6,12 @@ import com.watchworthy.api.exception.MovieNotFoundException;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.MovieService;
+import com.watchworthy.api.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +31,7 @@ public class MovieServiceImpl implements MovieService {
     private final UserRepository userRepository;
     private final WatchlistRepository watchlistRepository;
     private final ModelMapper modelMapper;
+    private final StorageService storageService;
 
     @Override
     public MovieDTO getMovieDetails(Integer movieId) {
@@ -228,6 +231,16 @@ public class MovieServiceImpl implements MovieService {
             movieDTOS.add(movieDTO);
         }
         return movieDTOS;
+    }
+
+    @Override
+    public void addPoster(Integer movieId , MultipartFile file) {
+        String posterPath = storageService.uploadFile(file);
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        if(movie != null){
+            movie.setPosterPath(posterPath);
+            movieRepository.save(movie);
+        }
     }
 
     @Override
