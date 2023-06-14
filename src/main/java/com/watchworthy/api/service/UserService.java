@@ -5,6 +5,7 @@ import com.watchworthy.api.dto.LoginDTO;
 import com.watchworthy.api.dto.SignUpDTO;
 import com.watchworthy.api.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     void signUp (SignUpDTO signUpDTO);
