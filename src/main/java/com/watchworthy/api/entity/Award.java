@@ -26,13 +26,17 @@ public class Award {
     @Column(nullable = false)
     private String description;
 
+    @Column(name = "poster_path")
+    private String posterPath;
+
+    @Column(name = "movie_name")
+    private String movieName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    // Constructors, getters, and setters
 
-    // Constructors
     public Award() {
     }
 

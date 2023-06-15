@@ -7,7 +7,11 @@ public class AwardDTO {
     private boolean winner;
     private int year;
     private String description;
-    private Long movieId;
+    private Integer movieId;
+
+    private String posterPath;
+
+    private String movieName;
 
     // Constructors, getters, and setters
 
@@ -15,7 +19,9 @@ public class AwardDTO {
     public AwardDTO() {
     }
 
-    public AwardDTO(Long id, String name, String category, boolean winner, int year, String description, Long movieId) {
+    public AwardDTO(Long id, String name, String category,
+                    boolean winner, int year, String description,
+                    Integer movieId, String posterPath, String movieName) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -23,6 +29,8 @@ public class AwardDTO {
         this.year = year;
         this.description = description;
         this.movieId = movieId;
+        this.movieName = movieName;
+        this.posterPath = posterPath;
     }
 
     // Getters and Setters
@@ -79,6 +87,21 @@ public class AwardDTO {
     }
 
     public void setMovieId(Integer movieId) {
-        this.movieId = movieId != null ? movieId.longValue() : null;
+        this.movieId = movieId ;
+    }
+
+
+    public String getPosterPath(){
+        return posterPath;
+    }
+    public String getMovieName(){
+        return movieName;
+    }
+
+    public void setPosterPath(String posterPath){
+        this.posterPath=posterPath;
+    }
+    public void setMovieName(String movieName){
+        this.movieName = movieName;
     }
 }

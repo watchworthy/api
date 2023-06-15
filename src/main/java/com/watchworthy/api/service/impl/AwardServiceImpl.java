@@ -38,8 +38,10 @@ public class AwardServiceImpl implements AwardService {
 
     @Override
     public void saveAward(AwardDTO awardDto) {
+        Movie movie = movieRepository.findById(awardDto.getMovieId()).orElse(null);
         Award award = convertToAwardEntity(awardDto);
         awardRepository.save(award);
+
     }
 
     @Override
