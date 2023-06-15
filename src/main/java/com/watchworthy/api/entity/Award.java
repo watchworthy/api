@@ -101,4 +101,16 @@ public class Award {
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
 }
