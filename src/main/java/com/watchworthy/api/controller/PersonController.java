@@ -6,6 +6,7 @@ import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,5 +47,10 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public void deletePerson(@PathVariable Integer id) {
         personService.delete(id);
+    }
+
+    @RequestMapping(path = "{personId}/poster",method = RequestMethod.POST)
+    public void addPoster(@PathVariable Integer personId,@RequestParam("file") MultipartFile file){
+        personService.addPoster(personId,file);
     }
 }

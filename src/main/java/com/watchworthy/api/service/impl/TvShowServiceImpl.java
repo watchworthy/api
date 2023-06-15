@@ -4,14 +4,14 @@ import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.*;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.*;
+import com.watchworthy.api.service.StorageService;
 import com.watchworthy.api.service.TvShowService;
-import io.micrometer.common.util.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +29,7 @@ public class TvShowServiceImpl implements TvShowService {
 
     private final TvShowWatchlistRepository tvShowWatchlistRepository;
     private final ModelMapper modelMapper;
+    private final StorageService storageService;
 
     public TvShowServiceImpl(TvShowRepository tvShowRepository,
                              SeasonRepository seasonRepository,
@@ -36,7 +37,7 @@ public class TvShowServiceImpl implements TvShowService {
                              TvShowPersonRepository tvShowPersonRepository,
                              UserRepository userRepository, ModelMapper modelMapper,
                              TvShowWatchlistRepository tvShowWatchlistRepository,
-                             CommentRepository commentRepository) {
+                             CommentRepository commentRepository, StorageService storageService) {
         this.tvShowRepository = tvShowRepository;
         this.tvShowGenreRepository = tvShowGenreRepository;
         this.tvShowPersonRepository = tvShowPersonRepository;
@@ -44,6 +45,7 @@ public class TvShowServiceImpl implements TvShowService {
         this.modelMapper = modelMapper;
         this.tvShowWatchlistRepository = tvShowWatchlistRepository;
         this.commentRepository = commentRepository;
+        this.storageService = storageService;
     }
 
     @Override
@@ -100,6 +102,16 @@ public class TvShowServiceImpl implements TvShowService {
             tvShowDTOs.add(tvShowDTO);
         }
         return tvShowDTOs;
+    }
+
+    @Override
+    public void addPoster(Integer tvId, MultipartFile file) {
+        String posterPath = storageService.uploadFile(file);
+        TvShow tvShow = tvShowRepository.findById(tvId).orElse(null);
+        if(tvShow != null){
+            tvShow.setPosterPath(posterPath);
+            tvShowRepository.save(tvShow);
+        }
     }
 
     @Override

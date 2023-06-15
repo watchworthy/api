@@ -8,6 +8,7 @@ import com.watchworthy.api.service.TvShowService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -79,6 +80,10 @@ public class TvShowController {
         seasonService.save(tvId, seasonDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    @RequestMapping(path = "/season/{seasonId}/poster",method = RequestMethod.POST)
+    public void addPosterToSeason(@PathVariable Integer seasonId,@RequestParam("file") MultipartFile file){
+        seasonService.addPoster(seasonId,file);
+    }
 
     @PutMapping("/season/{tvId}/{id}")
     public ResponseEntity<Void> updateSeason(@PathVariable("tvId") Integer tvId, @PathVariable("id") Integer seasonId, @RequestBody SeasonDTO seasonDTO) {
@@ -113,6 +118,11 @@ public class TvShowController {
     public ResponseEntity<Void> createEpisode(@PathVariable("tvId") Integer tvId, @PathVariable Integer seasonNumber, @RequestBody EpisodeDTO episodeDTO) {
         episodeService.save(tvId, seasonNumber, episodeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/episode/{episodeId}/poster")
+    public void addPosterToEpisode(@PathVariable Integer episodeId,@RequestParam("file") MultipartFile file){
+        episodeService.addPoster(episodeId,file);
     }
 
     @PutMapping("/season/{tvId}/{seasonNumber}/episode/{id}")
@@ -210,6 +220,11 @@ public class TvShowController {
         }else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @RequestMapping(path = "{tvId}/poster",method = RequestMethod.POST)
+    public void addPoster(@PathVariable Integer tvId,@RequestParam("file") MultipartFile file){
+        tvShowService.addPoster(tvId,file);
     }
 
 }
