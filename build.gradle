@@ -16,6 +16,7 @@ ext {
 	set('springCloudVersion', "2022.0.2")
 }
 
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -37,8 +38,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'io.github.openfeign:feign-okhttp:12.1'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
+	implementation "com.sendinblue:sib-api-v3-sdk:7.0.0"
+	implementation 'com.cloudinary:cloudinary-http44:1.33.0'
 }
-
 apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'idea'

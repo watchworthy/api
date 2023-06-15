@@ -12,3 +12,4 @@ VALUES ('Best Original Screenplay', 'Drama', true, 2023, 'Exceptional achievemen
 
 INSERT INTO awards (name, category, winner, year, description, movie_id)
 VALUES ('Best Visual Effects', 'Sci-Fi', false, 2023, 'Outstanding achievement in visual effects.', 7);
+

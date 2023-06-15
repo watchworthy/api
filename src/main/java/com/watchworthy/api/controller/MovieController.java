@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -131,6 +132,11 @@ public class MovieController {
     @RequestMapping(path = "/list/{personId}",method = RequestMethod.GET)
     public List<MovieDTO> getMoviesByPersonId(@PathVariable("personId") Integer personId){
         return movieService.getMoviesByPerson(personId);
+    }
+
+    @RequestMapping(path = "{movieId}/poster",method = RequestMethod.POST)
+    public void addPoster(@PathVariable Integer movieId,@RequestParam("file") MultipartFile file){
+        movieService.addPoster(movieId,file);
     }
 
 }

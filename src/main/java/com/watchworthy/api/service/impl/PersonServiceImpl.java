@@ -1,14 +1,11 @@
 package com.watchworthy.api.service.impl;
 
-import com.watchworthy.api.dto.MovieDTO;
 import com.watchworthy.api.dto.PersonDTO;
-import com.watchworthy.api.dto.TvShowDTO;
-import com.watchworthy.api.entity.Movie;
-import com.watchworthy.api.entity.MoviePerson;
 import com.watchworthy.api.entity.Person;
 import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.PersonService;
+import com.watchworthy.api.service.StorageService;
 import io.micrometer.common.util.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -16,9 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -27,14 +22,16 @@ public class PersonServiceImpl implements PersonService {
     private final MovieRepository movieRepository;
     private final TvShowRepository tvShowRepository;
     private final TvShowPersonRepository tvShowPersonRepository;
+    private final StorageService storageService;
     private final ModelMapper modelMapper;
 
-    public PersonServiceImpl(PersonRepository personRepository, MovieRepository movieRepository, TvShowRepository tvShowRepository, MoviePersonRepository moviePersonRepository, MovieRepository movieRepository1, TvShowRepository tvShowRepository1, TvShowPersonRepository tvShowPersonRepository, ModelMapper modelMapper) {
+    public PersonServiceImpl(PersonRepository personRepository, MovieRepository movieRepository, TvShowRepository tvShowRepository, MoviePersonRepository moviePersonRepository, MovieRepository movieRepository1, TvShowRepository tvShowRepository1, TvShowPersonRepository tvShowPersonRepository, StorageService storageService, ModelMapper modelMapper) {
         this.personRepository = personRepository;
         this.moviePersonRepository = moviePersonRepository;
         this.movieRepository = movieRepository1;
         this.tvShowRepository = tvShowRepository1;
         this.tvShowPersonRepository = tvShowPersonRepository;
+        this.storageService = storageService;
         this.modelMapper = modelMapper;
     }
 
@@ -81,6 +78,16 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void delete(Integer id) {
         personRepository.findById(id).ifPresent(person -> personRepository.deleteById(id));
+    }
+
+    @Override
+    public void addPoster(Integer personId, MultipartFile file) {
+        String posterPath = storageService.uploadFile(file);
+        Person person = personRepository.findById(personId).orElse(null);
+        if(person != null){
+            person.setPosterPath(posterPath);
+            personRepository.save(person);
+        }
     }
 
     public PersonDTO convertToDto(Person person) {

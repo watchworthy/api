@@ -5,6 +5,7 @@ import com.watchworthy.api.entity.Comment;
 import com.watchworthy.api.entity.Movie;
 import com.watchworthy.api.model.PageModel;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface MovieService {
     List<MovieDTO> getMoviesByPerson(Integer personId);
 
     List<MovieDTO> getUpcomingMovies();
+
+    void addPoster(Integer movieId , MultipartFile file);
 
     List<MovieDTO> getNowPlayingMovies();
 

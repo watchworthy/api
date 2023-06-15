@@ -1,15 +1,11 @@
 package com.watchworthy.api.service.impl;
 
-import com.watchworthy.api.entity.Comment;
-import com.watchworthy.api.entity.CommentDissLikes;
-import com.watchworthy.api.entity.CommentLikes;
-import com.watchworthy.api.entity.User;
-import com.watchworthy.api.repository.CommentDissLikesRepository;
-import com.watchworthy.api.repository.CommentLikesRepository;
-import com.watchworthy.api.repository.CommentRepository;
-import com.watchworthy.api.repository.UserRepository;
+import com.watchworthy.api.entity.*;
+import com.watchworthy.api.repository.*;
 import com.watchworthy.api.service.CommentLikesService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class CommentLikesServiceImpl implements CommentLikesService {
@@ -18,12 +14,14 @@ public class CommentLikesServiceImpl implements CommentLikesService {
     private final UserRepository userRepository;
     private final CommentLikesRepository commentLikesRepository;
     private final CommentDissLikesRepository commentDissLikesRepository;
+    private final NotificationRepository notificationRepository;
 
-    public CommentLikesServiceImpl (CommentRepository commentRepository , UserRepository userRepository, CommentLikesRepository commentLikesRepository,CommentDissLikesRepository dissLikesRepository){
+    public CommentLikesServiceImpl (CommentRepository commentRepository , UserRepository userRepository, CommentLikesRepository commentLikesRepository,CommentDissLikesRepository dissLikesRepository,NotificationRepository notificationRepository){
         this.commentRepository=commentRepository;
         this.userRepository = userRepository;
         this.commentLikesRepository = commentLikesRepository;
         this.commentDissLikesRepository = dissLikesRepository;
+        this.notificationRepository=notificationRepository;
     }
     @Override
     public boolean likeComment(Integer commentId, Long userId) {
@@ -42,6 +40,14 @@ public class CommentLikesServiceImpl implements CommentLikesService {
         commentLikes.setUserId(userId);
 
         commentLikesRepository.save(commentLikes);
+
+        Notifications notification = new Notifications();
+        notification.setUserId(findComment.getUser().getId());
+        notification.setMessage(findUser.getFirstName() +" "+ findUser.getLastName() + " liked your comment !");
+        notification.setRead(false);
+        notification.setDateTimeCreated(LocalDateTime.now());
+        notificationRepository.save(notification);
+
         return true;
     }
 
@@ -67,6 +73,14 @@ public class CommentLikesServiceImpl implements CommentLikesService {
         commentDissLikes.setUserId(userId);
 
         commentDissLikesRepository.save(commentDissLikes);
+
+        Notifications notification = new Notifications();
+        notification.setUserId(findComment.getUser().getId());
+        notification.setMessage(findUser.getFirstName() +" "+ findUser.getLastName() + " Diss liked your comment !");
+        notification.setRead(false);
+        notification.setDateTimeCreated(LocalDateTime.now());
+        notificationRepository.save(notification);
+
         return true;
     }
     @Override
