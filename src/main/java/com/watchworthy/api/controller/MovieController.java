@@ -8,6 +8,7 @@ import com.watchworthy.api.model.PageModel;
 import com.watchworthy.api.service.MovieService;
 import jakarta.validation.Valid;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,6 @@ public class MovieController {
     }
 
     @RequestMapping(path = "/upcoming", method = RequestMethod.GET)
-    @Cacheable(value = "moviesCache")
     public List<MovieDTO> getUpcomingMovies() {
         return movieService.getUpcomingMovies();
     }

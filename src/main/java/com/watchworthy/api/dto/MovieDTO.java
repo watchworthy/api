@@ -1,5 +1,6 @@
 package com.watchworthy.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
@@ -9,10 +10,9 @@ import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 
-public class MovieDTO {
+public class MovieDTO implements Serializable {
 
     private Integer id;
     @NotEmpty(message = "Title is mandatory")
@@ -24,4 +24,9 @@ public class MovieDTO {
     private List<GenreDTO> genres;
     private List<CommentDTO> comments;
     private List<PersonDTO> people;
+
+
+    public MovieDTO(){
+
+    }
 }

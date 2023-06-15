@@ -39,6 +39,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'io.github.openfeign:feign-okhttp:12.1'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }
 
 apply plugin: 'application'

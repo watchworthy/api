@@ -5,6 +5,7 @@ import com.watchworthy.api.dto.*;
 import com.watchworthy.api.entity.User;
 import com.watchworthy.api.exception.InvalidCredentialsException;
 import com.watchworthy.api.service.UserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,17 +61,17 @@ public class UserController {
         }
     }
 
-
+    @Cacheable(value = "userProfile")
     @GetMapping("/profile/{email}")
-    public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable String email) {
+    public UserProfileDTO getUserProfile(@PathVariable String email) {
         User user = userService.getUserProfile(email);
         if (user != null) {
-            UserProfileDTO userProfileDTO = mapUserToDTO(user);
-            return ResponseEntity.ok(userProfileDTO);
+            return mapUserToDTO(user);
         } else {
-            return ResponseEntity.notFound().build();
+            return null; // Or handle the case when the user is not found
         }
     }
+
 
     private UserProfileDTO mapUserToDTO(User user) {
         UserProfileDTO userProfileDTO = new UserProfileDTO();
