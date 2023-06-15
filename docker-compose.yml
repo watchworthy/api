@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  watchworthy-api-db:
+    image: postgres:14-alpine
+    volumes:
+      - watchworthy_data:/var/lib/pgsql/data
+    ports:
+      - "30015:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=watchworthy
+    networks:
+      - watchworthy-network
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/var/lib/redis/data
+    ports:
+      - "30016:5003"
+    networks:
+      - watchworthy-network
+  watchworthy-api:
+    container_name: watchworthy-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - watchworthy_data:/app/data/watchworthy-api
+      - redis_data:/app/data/redis
+    ports:
+      - "40015:8081"
+    links:
+      - watchworthy-api-db:db
+    depends_on:
+      - watchworthy-api-db
+      - redis
+    environment:
+      - JAVA_OPTS=Xmx512m -Dspring.profiles.active=local-container
+      - watchworthy.db.host=db
+      - watchworthy.db.user=postgres
+      - watchworthy.db.password=postgres
+      - watchworthy.db.port=5432
+      - server.port=8081
+      - SPRING_PROFILES_ACTIVE=local-container
+    networks:
+      - watchworthy-network
+
+volumes:
+  watchworthy_data:
+    external: true
+  redis_data:
+    external: true
+
+networks:
+  watchworthy-network:
+    external: true
