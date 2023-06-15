@@ -1,0 +1,70 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${watchworthy.db.host}:${watchworthy.db.port}/watchworthy
+    driver-class-name: org.postgresql.Driver
+    username: ${watchworthy.db.user}
+    password: ${watchworthy.db.password}
+    name: wwDatasource
+  flyway:
+    url: jdbc:postgresql://${watchworthy.db.host}:${watchworthy.db.port}/watchworthy
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    check-location: true
+    locations:
+      - classpath:migrations/db
+    user: ${watchworthy.db.user}
+    password: ${watchworthy.db.password}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: false
+    generate-ddl: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: update
+      #            create-source: metadata
+      #            scripts:
+      #              action: update
+      #              create-target: update.sql
+
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        generate_statistics: false
+        jdbc:
+          fetch_size: 2000
+          lob.non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        hbm2dll:
+          create_namespaces: true
+        default_schema: public
+  data:
+    redis:
+      host: localhost
+      port: 5003
+      time-to-live: PT30M
+
+server:
+  port: 8081
+
+service:
+  client:
+    url:
+      tmdb-service: ${TMDB_URL:https://api.themoviedb.org/3/}
+    secrets:
+      tmdb-secret: ${TMBD_SECRET:14e1a56e4d03b85e51b78fcfd6e055ec}
+      sendInBlueKey: ${SENDINBLUE_KEY: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}
+
+jwt:
+  secret: jwtsecret
+
+cloudinary:
+  cloud_name: dp4j5wdmp
+  api_key: 971638141475129
+  api_secret: BNFRcqYSniZp_D1gQT5S3oa9l40
