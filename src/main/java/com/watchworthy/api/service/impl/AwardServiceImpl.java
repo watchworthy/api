@@ -63,7 +63,7 @@ public class AwardServiceImpl implements AwardService {
         awardRepository.deleteById(id);
     }
 
-    // Helper methods for converting between entities and DTOs
+
 
     private AwardDTO convertToAwardDTO(Award award) {
         AwardDTO awardDto = new AwardDTO();
@@ -73,7 +73,8 @@ public class AwardServiceImpl implements AwardService {
         awardDto.setWinner(award.isWinner());
         awardDto.setYear(award.getYear());
         awardDto.setDescription(award.getDescription());
-        awardDto.setMovieId(award.getMovie().getId()); // Assuming you have a method to retrieve the ID of the associated Movie
+        awardDto.setMovieId(award.getMovie().getId());
+        awardDto.setPosterPath(award.getPosterPath());
 
         return awardDto;
     }
@@ -93,15 +94,17 @@ public class AwardServiceImpl implements AwardService {
         award.setWinner(awardDto.isWinner());
         award.setYear(awardDto.getYear());
         award.setDescription(awardDto.getDescription());
-        award.setMovie(getMovieEntity(awardDto.getMovieId())); // Assuming you have a method to retrieve the Movie entity
-
+        award.setMovie(getMovieEntity(awardDto.getMovieId()));
+        award.setPosterPath(awardDto.getPosterPath());
         return award;
     }
 
-    private Movie getMovieEntity(Long movieId) {
-        Optional<Movie> movieOptional = movieRepository.findById(movieId.intValue()); // Convert Long to Integer
+
+    private Movie getMovieEntity(Integer movieId) {
+        Optional<Movie> movieOptional = movieRepository.findById(movieId);
         return movieOptional.orElseThrow(() -> new NoSuchElementException("Movie not found"));
     }
+
 
 
 }

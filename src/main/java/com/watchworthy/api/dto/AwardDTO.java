@@ -9,9 +9,7 @@ public class AwardDTO {
     private String description;
     private Long movieId;
 
-    // Constructors, getters, and setters
 
-    // Constructors
     public AwardDTO() {
     }
 
@@ -74,7 +72,7 @@ public class AwardDTO {
         this.description = description;
     }
 
-    public Long getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 

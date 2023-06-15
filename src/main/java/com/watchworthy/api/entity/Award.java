@@ -45,7 +45,7 @@ public class Award {
         this.movie = movie;
     }
 
-    // Getters and Setters
+    // Getters and Setters  
     public Long getId() {
         return id;
     }
@@ -100,5 +100,17 @@ public class Award {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 }
