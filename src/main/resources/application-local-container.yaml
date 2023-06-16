@@ -62,7 +62,8 @@ service:
       sendInBlueKey: ${SENDINBLUE_KEY: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}
 
 jwt:
-  secret: jwtsecret
+  secret: 46294A404D635166546A576E5A7234753778214125442A472D4B615064526755
+  expirationMs: 864000000
 
 cloudinary:
   cloud_name: dp4j5wdmp
