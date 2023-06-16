@@ -1,6 +1,5 @@
 package com.watchworthy.api.controller;
 
-import com.electronwill.nightconfig.core.conversion.Path;
 import com.watchworthy.api.service.CommentLikesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -18,7 +18,7 @@ services:
     volumes:
       - redis_data:/var/lib/redis/data
     ports:
-      - "30016:5003"
+      - "30016:6379"
     networks:
       - watchworthy-network
   watchworthy-api:
