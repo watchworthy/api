@@ -33,7 +33,7 @@ public class EmailServiceImpl implements EmailService {
         apiKey.setApiKey(sendInBlueKey);
     }
     @Override
-    public String sendEmail(String recipientEmail, String recipientName, EmailType type) throws IOException {
+    public String sendEmail(String recipientEmail, String recipientName, EmailType type, String var) throws IOException {
         try {
             TransactionalEmailsApi api = new TransactionalEmailsApi();
             SendSmtpEmailSender sender = new SendSmtpEmailSender();
@@ -45,8 +45,14 @@ public class EmailServiceImpl implements EmailService {
             to.setName(recipientName);
             toList.add(to);
             Properties params = new Properties();
-            params.setProperty("parameter", "My param value");
-            params.setProperty("subject", "Welcome to WatchWorthy");
+            if(type.equals(EmailType.RESET_PASSWORD)){
+                params.setProperty("resetLink","http://localhost:3000/reset-password?token="+ var);
+            }
+            if(type.equals(EmailType.RESET_PASSWORD)){
+                params.setProperty("subject", "WatchWorthy - Reset password");
+            }else{
+                params.setProperty("subject", "Welcome to WatchWorthy");
+            }
             SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
             sendSmtpEmail.setSender(sender);
             sendSmtpEmail.setTo(toList);
