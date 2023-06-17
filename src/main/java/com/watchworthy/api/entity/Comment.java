@@ -19,7 +19,7 @@ public class Comment {
     private String firstName;
     private String lastName;
     private LocalDateTime dateTimeCreated;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="movie_id")
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)

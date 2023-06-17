@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 
-public class MovieDTO implements Serializable {
+public class MovieDTO {
 
     private Integer id;
     @NotEmpty(message = "Title is mandatory")
