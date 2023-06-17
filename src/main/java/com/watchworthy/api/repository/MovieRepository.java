@@ -18,4 +18,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer>, JpaSpeci
     List<Object[]> getWatchlistByUserId(@Param("userId") Long userId);
 
     List<Movie> findByReleaseDateGreaterThan(LocalDate currentDate);
+
+    @Query("SELECT m FROM movie m LEFT JOIN m.comments c GROUP BY m ORDER BY COUNT(c) DESC")
+    List<Movie> findTop20ByOrderByCommentsSizeDesc();
 }

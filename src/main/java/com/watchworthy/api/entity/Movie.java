@@ -45,16 +45,4 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments;
 
-    public void calculateAverageRating(List<Integer> ratings) {
-        if (ratings == null || ratings.isEmpty()) {
-            averageRating = 0.0;
-            return;
-        }
-
-        double sum = 0.0;
-        for (Integer rating : ratings) {
-            sum += rating;
-        }
-        averageRating = sum / ratings.size();
-    }
 }

@@ -247,10 +247,11 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDTO> getNowPlayingMovies() {
         return null;
     }
-
-    @Override
     public List<MovieDTO> getPopularMovies() {
-        return null;
+        List<Movie> movies = movieRepository.findTop20ByOrderByCommentsSizeDesc();
+        return movies.stream()
+                .map(movie -> modelMapper.map(movie, MovieDTO.class))
+                .collect(Collectors.toList());
     }
 
     public Movie convertToEntity(MovieDTO movieDTO) {

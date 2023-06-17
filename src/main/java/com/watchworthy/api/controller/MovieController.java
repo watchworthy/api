@@ -142,4 +142,8 @@ public class MovieController {
         movieService.addPoster(movieId,file);
     }
 
+    @RequestMapping(path = "/popular", method = RequestMethod.GET)
+    public List<MovieDTO> getPopularMovies() {
+        return movieService.getPopularMovies();
+    }
 }
