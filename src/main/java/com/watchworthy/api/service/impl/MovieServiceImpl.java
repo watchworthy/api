@@ -52,7 +52,6 @@ public class MovieServiceImpl implements MovieService {
             throw new MovieNotFoundException();
         }
     }
-
     @Override
     public PageModel<MovieDTO> getMovies(Integer page, Integer size, String q, Integer genre) {
         page = page != null ? Math.max(page - 1, 0) : 0;
@@ -248,7 +247,8 @@ public class MovieServiceImpl implements MovieService {
         return null;
     }
     public List<MovieDTO> getPopularMovies() {
-        List<Movie> movies = movieRepository.findTop20ByOrderByCommentsSizeDesc();
+        Pageable pageable = PageRequest.of(0, 20);
+        List<Movie> movies = movieRepository.getPopularMovies(pageable);
         return movies.stream()
                 .map(movie -> modelMapper.map(movie, MovieDTO.class))
                 .collect(Collectors.toList());

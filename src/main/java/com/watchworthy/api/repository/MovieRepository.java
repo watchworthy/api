@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer>, JpaSpeci
 
     List<Movie> findByReleaseDateGreaterThan(LocalDate currentDate);
 
+
     @Query("SELECT m FROM movie m LEFT JOIN m.comments c GROUP BY m ORDER BY COUNT(c) DESC")
-    List<Movie> findTop20ByOrderByCommentsSizeDesc();
+    List<Movie> getPopularMovies(Pageable pageable);
 }
