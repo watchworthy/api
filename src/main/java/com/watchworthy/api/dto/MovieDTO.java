@@ -24,7 +24,7 @@ public class MovieDTO implements Serializable {
     private List<GenreDTO> genres;
     private List<CommentDTO> comments;
     private List<PersonDTO> people;
-
+    private String trailerId;
 
     public MovieDTO(){
 
