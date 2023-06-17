@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -58,7 +59,11 @@ public class UserServiceImpl implements UserService {
         String lastName = Optional.ofNullable(signUpDTO.getLastName()).orElseThrow(EmptyValueExistException::new);
         String password = Optional.ofNullable(signUpDTO.getPassword()).orElseThrow(EmptyValueExistException::new);
         String confirmPassword = Optional.ofNullable(signUpDTO.getConfirmPassword()).orElseThrow(EmptyValueExistException::new);
-        List<String> roles = Optional.ofNullable(signUpDTO.getRoles()).orElseThrow(EmptyValueExistException::new);
+        List<String> roles = signUpDTO.getRoles();
+        if(roles == null){
+            roles = new ArrayList<>();
+            roles.add("USER");
+        }
         Set<Role> roleSet = roles.stream()
                 .map(roleName -> {
                     Role role = roleRepository.findRoleByName(roleName).orElse(null);
