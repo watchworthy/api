@@ -30,6 +30,9 @@ public class Movie {
     @Column(name = "poster_path")
     private String posterPath;
 
+    @Column(name = "trailer_id")
+    private String trailerId;
+
     @Column(name = "average_rating")
     private Double averageRating;
 

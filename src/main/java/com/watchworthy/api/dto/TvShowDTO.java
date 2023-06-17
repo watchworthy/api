@@ -28,4 +28,5 @@ public class TvShowDTO {
     private Set<SeasonDTO> seasons;
     private Set<GenreDTO> genres;
     private Set<PersonDTO> people;
+    private String trailerId;
 }
