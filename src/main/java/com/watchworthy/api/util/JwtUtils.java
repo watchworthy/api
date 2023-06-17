@@ -34,6 +34,7 @@ public class JwtUtils {
                 .claim("id",userDetails.getId())
                 .claim("username",userDetails.getUsername())
                 .claim("email",userDetails.getEmail())
+                .claim("preferences",userDetails.getPreferredGenres())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();

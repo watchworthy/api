@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
@@ -83,4 +85,18 @@ public class UserController {
         return userProfileDTO;
     }
 
+    @PostMapping("/{userId}/preferredGenres")
+    public ResponseEntity<String> addPreferredGenres(
+            @PathVariable Long userId,
+            @RequestBody AddPreferredGenresDTO dto
+    ) {
+        userService.addPreferredGenres(userId, dto.getPreferredGenres());
+        return ResponseEntity.ok("Preferred genres added successfully.");
+    }
+
+    @GetMapping("/{userId}/preferredGenres")
+    public ResponseEntity<List<String>> getPreferredGenres(@PathVariable Long userId) {
+        List<String> preferredGenres = userService.getPreferredGenres(userId);
+        return ResponseEntity.ok(preferredGenres);
+    }
 }

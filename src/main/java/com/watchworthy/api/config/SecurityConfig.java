@@ -59,6 +59,8 @@ public class SecurityConfig  {
             "/movierates/**",
             "/commentlikes/**",
             "/tv/**",
+            "/chat/**",
+            "/recommended/**",
             "/error"
     };
 
