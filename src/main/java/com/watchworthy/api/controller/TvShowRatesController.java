@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tvshowrates")
+@CrossOrigin(origins = "*")
 public class TvShowRatesController {
     private final TvShowRatesService tvShowRatesService;
 

@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/award")
+@CrossOrigin(origins = "*")
 public class AwardController {
     private final AwardService awardService;
 

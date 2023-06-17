@@ -2,13 +2,11 @@ package com.watchworthy.api.controller;
 
 import com.watchworthy.api.service.CommentLikesService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/commentlikes")
+@CrossOrigin(origins = "*")
 public class CommentLikesController {
     private final CommentLikesService commentLikesService;
 

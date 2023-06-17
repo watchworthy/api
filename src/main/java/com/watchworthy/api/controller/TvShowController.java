@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tv")
+@CrossOrigin(origins = "*")
 public class TvShowController {
     private final EpisodeService episodeService;
     private final SeasonService seasonService;

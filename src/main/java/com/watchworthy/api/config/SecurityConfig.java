@@ -49,6 +49,15 @@ public class SecurityConfig  {
             "/webjars/swagger-ui/**",
             "/auth",
             "/user/**",
+            "/person/**",
+            "/movie/**",
+            "/notification/**",
+            "/genre/**",
+            "/events/**",
+            "/award/**",
+            "/tvshowrates/**",
+            "movierates/**",
+            "/commentlikes/**",
             "/tv/**",
             "/error"
     };
@@ -87,19 +96,5 @@ public class SecurityConfig  {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList(RequestMethod.GET.name(),
-                RequestMethod.POST.name(),
-                RequestMethod.OPTIONS.name(),
-                RequestMethod.DELETE.name(),
-                RequestMethod.PUT.name()));
-        configuration.setAllowedHeaders(Collections.singletonList("*"));
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
   
 }
