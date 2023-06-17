@@ -151,6 +151,24 @@ public class UserServiceImpl implements UserService {
         return userOptional.orElse(null);
     }
 
+    @Override
+    public void addPreferredGenres(Long userId, List<String> preferredGenres) {
+        User user = _userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+
+        user.getPreferredGenres().addAll(preferredGenres);
+
+        _userRepository.save(user);
+    }
+
+    @Override
+    public List<String> getPreferredGenres(Long userId) {
+        User user = _userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+
+        return user.getPreferredGenres();
+    }
+
 
 
 }

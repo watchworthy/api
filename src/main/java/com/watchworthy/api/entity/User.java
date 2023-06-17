@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,11 @@ public class User implements UserDetails {
     private String lastName;
     private String password;
     private boolean isActive;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_genre", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "genre")
+    private List<String> preferredGenres = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
