@@ -73,17 +73,9 @@ public class AwardServiceImpl implements AwardService {
         awardDto.setWinner(award.isWinner());
         awardDto.setYear(award.getYear());
         awardDto.setDescription(award.getDescription());
-        awardDto.setMovieId(award.getMovie().getId()); // Assuming you have a method to retrieve the ID of the associated Movie
-
+        awardDto.setMovieId(award.getMovie().getId());
+        awardDto.setPosterPath(award.getPosterPath()); // Set the posterPath value
         return awardDto;
-    }
-
-    private List<AwardDTO> convertToAwardDTOList(List<Award> awards) {
-        List<AwardDTO> awardDtos = new ArrayList<>();
-        for (Award award : awards) {
-            awardDtos.add(convertToAwardDTO(award));
-        }
-        return awardDtos;
     }
 
     private Award convertToAwardEntity(AwardDTO awardDto) {
@@ -93,9 +85,19 @@ public class AwardServiceImpl implements AwardService {
         award.setWinner(awardDto.isWinner());
         award.setYear(awardDto.getYear());
         award.setDescription(awardDto.getDescription());
-        award.setMovie(getMovieEntity(awardDto.getMovieId())); // Assuming you have a method to retrieve the Movie entity
-
+        award.setMovie(getMovieEntity(awardDto.getMovieId()));
+        award.setPosterPath(awardDto.getPosterPath());
         return award;
+    }
+
+
+
+    private List<AwardDTO> convertToAwardDTOList(List<Award> awards) {
+        List<AwardDTO> awardDtos = new ArrayList<>();
+        for (Award award : awards) {
+            awardDtos.add(convertToAwardDTO(award));
+        }
+        return awardDtos;
     }
 
     private Movie getMovieEntity(Long movieId) {

@@ -26,9 +26,12 @@ public class Award {
     @Column(nullable = false)
     private String description;
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+    private String posterPath;
 
     // Constructors, getters, and setters
 
@@ -100,5 +103,13 @@ public class Award {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
     }
 }
