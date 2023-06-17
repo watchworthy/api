@@ -18,5 +18,7 @@ public interface UserService {
     void addPreferredGenres(Long userId, List<String> preferredGenres);
     List<String> getPreferredGenres(Long userId);
 
+    void forgotPassword(String email);
+    void resetPassword(String token,String password);
 
 }

@@ -99,4 +99,24 @@ public class UserController {
         List<String> preferredGenres = userService.getPreferredGenres(userId);
         return ResponseEntity.ok(preferredGenres);
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) {
+        try {
+            userService.forgotPassword(forgotPasswordDTO.getEmail());
+            return ResponseEntity.ok("Password reset email sent successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+        try {
+            userService.resetPassword(resetPasswordDTO.getToken(), resetPasswordDTO.getPassword());
+            return ResponseEntity.ok("Password reset successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
 }
