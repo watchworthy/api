@@ -63,9 +63,9 @@ public class UserController {
     }
 
     @Cacheable(value = "userProfile")
-    @GetMapping("/profile/{email}")
-    public UserProfileDTO getUserProfile(@PathVariable String email) {
-        User user = userService.getUserProfile(email);
+    @GetMapping("/profile/{username}")
+    public UserProfileDTO getUserProfile(@PathVariable String username) {
+        User user = userService.getUserProfile(username);
         if (user != null) {
             return mapUserToDTO(user);
         } else {

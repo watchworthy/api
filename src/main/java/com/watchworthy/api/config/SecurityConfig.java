@@ -56,7 +56,7 @@ public class SecurityConfig  {
             "/events/**",
             "/award/**",
             "/tvshowrates/**",
-            "movierates/**",
+            "/movierates/**",
             "/commentlikes/**",
             "/tv/**",
             "/error"
