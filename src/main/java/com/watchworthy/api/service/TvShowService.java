@@ -29,4 +29,6 @@ public interface TvShowService {
     boolean removeCommentTvShows(Integer id);
     boolean updateCommentTvShows(Integer id, String text);
 
+    List<TvShowGenreDTO> getGenres(Integer tvId);
+
 }

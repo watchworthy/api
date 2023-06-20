@@ -33,7 +33,6 @@ public class JwtFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String jwt = parseJwt(request);
         if (jwt == null) {
-            log.warn("No JWT token found in request");
             filterChain.doFilter(request, response);
             return;
         }

@@ -1,11 +1,9 @@
 package com.watchworthy.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -13,8 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 @Entity(name = "tv_show")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TvShow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,20 +56,20 @@ public class TvShow {
             mappedBy = "tvshow",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @Builder.Default
     private Set<Season> seasons = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tvshows")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tvshows")
     private Set<Genre> genres = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tvshows")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tvshows")
     private Set<Person> people = new HashSet<>();
 
     //tv show comment
 
-    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
 

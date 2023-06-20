@@ -24,9 +24,5 @@ public class TvShowDTO {
     private int numberOfEpisodes;
     private boolean inProduction;
     private String status;
-    private List<CommentDTO> comments;
-    private Set<SeasonDTO> seasons;
-    private Set<GenreDTO> genres;
-    private Set<PersonDTO> people;
     private String trailerId;
 }

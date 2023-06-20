@@ -228,4 +228,9 @@ public class TvShowController {
         tvShowService.addPoster(tvId,file);
     }
 
+    @RequestMapping(path = "/{tvId}/genres", method = RequestMethod.GET)
+    public List<TvShowGenreDTO> getGenres(@PathVariable Integer tvId){
+        return tvShowService.getGenres(tvId);
+    }
+
 }
