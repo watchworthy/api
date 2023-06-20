@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class TvShowServiceImpl implements TvShowService {
     private final TvShowRepository tvShowRepository;
+    private final PersonRepository personRepository;
     private final TvShowGenreRepository tvShowGenreRepository;
     private final TvShowPersonRepository tvShowPersonRepository;
     private final UserRepository userRepository;
@@ -33,12 +34,13 @@ public class TvShowServiceImpl implements TvShowService {
 
     public TvShowServiceImpl(TvShowRepository tvShowRepository,
                              SeasonRepository seasonRepository,
-                             TvShowGenreRepository tvShowGenreRepository,
+                             PersonRepository personRepository, TvShowGenreRepository tvShowGenreRepository,
                              TvShowPersonRepository tvShowPersonRepository,
                              UserRepository userRepository, ModelMapper modelMapper,
                              TvShowWatchlistRepository tvShowWatchlistRepository,
                              CommentRepository commentRepository, StorageService storageService) {
         this.tvShowRepository = tvShowRepository;
+        this.personRepository = personRepository;
         this.tvShowGenreRepository = tvShowGenreRepository;
         this.tvShowPersonRepository = tvShowPersonRepository;
         this.userRepository = userRepository;
@@ -141,8 +143,61 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void addPersonToTvShow(TvShowPersonDTO tvShowPersonDTO) {
-    tvShowPersonRepository.save(tvSHowPersonToEntity(tvShowPersonDTO));
+    public List<CommentDTO> getComments(Integer tvId) {
+       List<Comment> comments = commentRepository.findAllByTvShowId(tvId);
+       List<CommentDTO> commentDTOS = new ArrayList<>();
+       for(Comment comment: comments){
+           CommentDTO commentDTO =
+                   CommentDTO.builder()
+                           .id(comment.getId())
+                           .text(comment.getText())
+                           .dateTimeCreated(comment.getDateTimeCreated())
+                           .firstName(comment.getFirstName())
+                           .lastName(comment.getLastName())
+                           .build();
+           commentDTOS.add(commentDTO);
+       }
+       return commentDTOS;
+    }
+
+    @Override
+    public List<TvShowPersonDTO> getPeople(Integer tvId) {
+        List<TvShowPerson> people = tvShowPersonRepository.findAllByTvshowId(tvId);
+        List<TvShowPersonDTO> personDTOS = new ArrayList<>();
+        for(TvShowPerson person: people){
+            TvShowPersonDTO personDTO = TvShowPersonDTO.builder()
+                    .person(PersonDTO
+                            .builder()
+                            .name(person.getPerson().getName())
+                            .id(person.getPerson()
+                                    .getId())
+                            .biography(person.getPerson().getBiography())
+                            .posterPath(person.getPerson().getPosterPath())
+                            .gender(person.getPerson().getGender())
+                            .build())
+                    .tvShowId(person.getTvshow().getId())
+                    .id(person.getId())
+                    .build();
+            personDTOS.add(personDTO);
+        }
+        return personDTOS;
+    }
+
+
+    @Override
+    public void addPersonToTvShow(Integer tvId, Integer personId) {
+        TvShow tvShow = tvShowRepository.findById(tvId).orElse(null);
+        if(tvShow == null){
+            throw new RuntimeException("Tv show not found");
+        }
+        Person person = personRepository.findById(personId).orElse(null);
+        if(person == null){
+            throw new RuntimeException("Person not found");
+        }
+        TvShowPerson tvShowPerson = TvShowPerson.builder()
+                        .person(person)
+                                .tvshow(tvShow).build();
+    tvShowPersonRepository.save(tvShowPerson);
     }
 
 //    @Override

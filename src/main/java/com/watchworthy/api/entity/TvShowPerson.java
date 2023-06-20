@@ -1,12 +1,15 @@
 package com.watchworthy.api.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity(name = "tvshow_person")
 @Getter
 @Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TvShowPerson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
