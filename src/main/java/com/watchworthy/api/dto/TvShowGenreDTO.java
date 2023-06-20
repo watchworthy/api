@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TvShowGenreDTO {
     private Long id;
+    private String name;
     private Integer tvShowId;
     private Integer genreId;
 }

@@ -50,7 +50,7 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void save(TvShowDTO tvShowDTO) {
-        tvShowRepository.save(convertToEntity(tvShowDTO));
+        tvShowRepository.save(dtoToEntity(tvShowDTO));
     }
 
     @Override
@@ -58,14 +58,14 @@ public class TvShowServiceImpl implements TvShowService {
         TvShow tvShow = tvShowRepository.findById(tvShowId).orElse(null);
         if (tvShow != null) {
             tvShowDTO.setId(tvShowId);
-            tvShowRepository.save(convertToEntity(tvShowDTO));
+            tvShowRepository.save(dtoToEntity(tvShowDTO));
         }
     }
 
     @Override
     public TvShowDTO getTvShow(Integer id) {
         TvShow tvShow = tvShowRepository.findById(id).orElse(null);
-        return tvShow != null ? convertToDto(tvShow) : null;
+        return tvShow != null ? entityToDTO(tvShow) : null;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class TvShowServiceImpl implements TvShowService {
                 .total(tvShows.getTotalElements())
                 .size(tvShows.getSize())
                 .page(tvShows.getNumber() + 1)
-                .data(tvShows.map(this::convertToDto).getContent())
+                .data(tvShows.map(this::entityToDTO).getContent())
                 .build();
     }
 
@@ -98,7 +98,7 @@ public class TvShowServiceImpl implements TvShowService {
 
         List<TvShowDTO> tvShowDTOs = new ArrayList<>();
         for(TvShow tvShow: tvShows){
-            TvShowDTO tvShowDTO = convertToDto(tvShow);
+            TvShowDTO tvShowDTO = entityToDTO(tvShow);
             tvShowDTOs.add(tvShowDTO);
         }
         return tvShowDTOs;
@@ -125,6 +125,22 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
+    public List<TvShowGenreDTO> getGenres(Integer tvId) {
+        List<TvShowGenre> genres = tvShowGenreRepository.findAll();
+        List<TvShowGenreDTO> genreDTOs = new ArrayList<>();
+        for(TvShowGenre genre: genres){
+            TvShowGenreDTO tvShowGenreDTO = TvShowGenreDTO.builder()
+                    .id(genre.getId())
+                    .name(genre.getGenre().getName())
+                    .genreId(genre.getGenre().getId())
+                    .tvShowId(genre.getTvshow().getId())
+                    .build();
+            genreDTOs.add(tvShowGenreDTO);
+        }
+        return genreDTOs;
+    }
+
+    @Override
     public void addPersonToTvShow(TvShowPersonDTO tvShowPersonDTO) {
     tvShowPersonRepository.save(tvSHowPersonToEntity(tvShowPersonDTO));
     }
@@ -139,8 +155,37 @@ public class TvShowServiceImpl implements TvShowService {
 //
 //    }
 
-    public TvShowDTO convertToDto(TvShow tvShow) {
-        return modelMapper.map(tvShow, TvShowDTO.class);
+//    public TvShowDTO entityToDTO(TvShow tvShow) {
+//        return modelMapper.map(tvShow, TvShowDTO.class);
+//    }
+
+    private TvShowDTO entityToDTO(TvShow tvShow){
+        return TvShowDTO.builder()
+                .id(tvShow.getId())
+                .status(tvShow.getStatus())
+                .inProduction(tvShow.isInProduction())
+                .numberOfSeasons(tvShow.getNumberOfSeasons())
+                .overview(tvShow.getOverview())
+                .trailerId(tvShow.getTrailerId())
+                .averageRating(tvShow.getAverageRating())
+                .posterPath(tvShow.getPosterPath())
+                .numberOfEpisodes(tvShow.getNumberOfEpisodes())
+                .title(tvShow.getTitle())
+                .releaseDate(tvShow.getReleaseDate())
+                .build();
+    }
+    private TvShow dtoToEntity(TvShowDTO model) {
+        return TvShow.builder()
+                .id(model.getId())
+                .status(model.getStatus())
+                .averageRating(model.getAverageRating())
+                .overview(model.getOverview())
+                .inProduction(model.isInProduction())
+                .numberOfSeasons(model.getNumberOfSeasons())
+                .releaseDate(model.getReleaseDate())
+                .posterPath(model.getPosterPath())
+                .trailerId(model.getTrailerId())
+                .build();
     }
 
     public TvShow convertToEntity(TvShowDTO tvShowDTO) {

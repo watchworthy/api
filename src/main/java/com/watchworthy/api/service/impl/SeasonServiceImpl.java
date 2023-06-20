@@ -36,9 +36,7 @@ public class SeasonServiceImpl implements SeasonService {
                 .orElseThrow(() -> new NoSuchElementException("TV show not found"));
         Season season = convertToEntity(seasonDTO);
         season.setTvshow(tvShow);
-        tvShow.getSeasons().add(season);
         seasonRepository.save(season);
-        tvShowRepository.save(tvShow);
     }
 
     @Override
@@ -90,11 +88,32 @@ public class SeasonServiceImpl implements SeasonService {
         }
     }
 
-    public SeasonDTO convertToDto(Season season) {
-        return modelMapper.map(season, SeasonDTO.class);
-    }
+//    public SeasonDTO convertToDto(Season season) {
+//        return modelMapper.map(season, SeasonDTO.class);
+//    }
 
-    public Season convertToEntity(SeasonDTO seasonDTO) {
-        return modelMapper.map(seasonDTO, Season.class);
+
+    public SeasonDTO convertToDto(Season season){
+        return SeasonDTO.builder()
+                .overview(season.getOverview())
+                .seasonNumber(season.getSeasonNumber())
+                .posterPath(season.getPosterPath())
+                .airDate(season.getAirDate())
+                .id(season.getId())
+                .name(season.getName())
+                .build();
+    }
+//    public Season convertToEntity(SeasonDTO seasonDTO) {
+//        return modelMapper.map(seasonDTO, Season.class);
+//    }
+    public Season convertToEntity(SeasonDTO seasonDTO){
+        return Season.builder()
+                .airDate(seasonDTO.getAirDate())
+                .seasonNumber(seasonDTO.getSeasonNumber())
+                .overview(seasonDTO.getOverview())
+                .id(seasonDTO.getId())
+                .name(seasonDTO.getName())
+                .posterPath(seasonDTO.getPosterPath())
+                .build();
     }
 }
