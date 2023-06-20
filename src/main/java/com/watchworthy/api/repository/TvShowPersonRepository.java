@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TvShowPersonRepository extends JpaRepository<TvShowPerson, Integer> {
     List<TvShowPerson> findByPersonId(Integer personId);
+    List<TvShowPerson> findAllByTvshowId(Integer tvId);
 
 }

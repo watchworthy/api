@@ -70,10 +70,15 @@ public class TvShowController {
         tvShowService.addGenre(tvShowGenreDTO);
     }
 
-    @RequestMapping(path = "/person", method = RequestMethod.POST)
+    @RequestMapping(path = "/{tvId}/person/{personId}", method = RequestMethod.POST)
     public void addPerson(
-            @RequestBody TvShowPersonDTO tvShowPersonDTO) {
-        tvShowService.addPersonToTvShow(tvShowPersonDTO);
+           @PathVariable Integer tvId, @PathVariable Integer personId) {
+        tvShowService.addPersonToTvShow(tvId,personId);
+    }
+
+    @RequestMapping(path = "/{tvId}/people", method = RequestMethod.GET)
+    public List<TvShowPersonDTO> getPeople(@PathVariable Integer tvId) {
+        return tvShowService.getPeople(tvId);
     }
 
     @PostMapping("/season/{tvId}")
@@ -192,6 +197,11 @@ public class TvShowController {
 
 
     //Comments TvSHows Stuff
+
+    @RequestMapping(path = "/{tvId}/comments", method = RequestMethod.GET)
+    public List<CommentDTO> getComments(@PathVariable Integer tvId){
+        return tvShowService.getComments(tvId);
+    }
 
     @RequestMapping(path = "/addcommenttvshows/{tvShowId}/{userId}",method = RequestMethod.POST)
     public ResponseEntity<Void> addCommentToTvShows (@PathVariable Integer tvShowId, @PathVariable Long userId, @RequestBody AddCommentDTO addCommentDTO){

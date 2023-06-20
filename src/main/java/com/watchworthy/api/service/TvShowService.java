@@ -13,7 +13,7 @@ public interface TvShowService {
     PageModel<TvShowDTO> getTvShows(Integer page, Integer size, String q, Integer genre);
     void delete(Integer id);
     void addGenre(TvShowGenreDTO tvShowGenreDTO);
-    void addPersonToTvShow(TvShowPersonDTO tvShowPersonDTO);
+    void addPersonToTvShow(Integer tvId, Integer personId);
 //    void getSeasons(Integer tvShowId);
 //    void getPeople(Integer tvShowId);
     List<TvShowDTO> getTvShowsByPerson(Integer personId);
@@ -31,4 +31,7 @@ public interface TvShowService {
 
     List<TvShowGenreDTO> getGenres(Integer tvId);
 
+    List<CommentDTO> getComments(Integer tvId);
+
+    List<TvShowPersonDTO> getPeople(Integer tvId);
 }

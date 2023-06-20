@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class TvShowPersonDTO {
     private Long id;
     private Integer tvShowId;
-    private Integer personId;
+    private PersonDTO person;
 }
