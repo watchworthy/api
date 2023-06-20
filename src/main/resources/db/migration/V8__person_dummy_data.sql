@@ -2,58 +2,58 @@ INSERT INTO person (name, gender, poster_path, biography) VALUES
 ('Bryan Cranston', 'Male', 'https://media.gettyimages.com/id/79179466/photo/the-55th-annual-primetime-emmy-awards-access-hollywood-red-carpet.jpg?s=612x612&w=gi&k=20&c=ykv4psjBv1GjqY1qq0L9yJEx0a2L45NdjY3f1zD1tpY=', 'Bryan Cranston is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Aaron Paul', 'Male', 'https://www.gettyimages.com/detail/news-photo/actor-aaron-paul-arrives-at-the-hellion-premiere-party-at-news-photo/463395839', 'Aaron Paul is an American actor.');
+('Aaron Paul', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kOJelnLSb89SeivbOCt1l94Hz2d.jpg', 'Aaron Paul is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Anna Gunn', 'Female', 'https://www.gettyimages.com/detail/news-photo/actress-anna-gunn-arrives-at-the-20th-annual-screen-actors-news-photo/463807371', 'Anna Gunn is an American actress.');
+('Anna Gunn', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/usWnHCzbADijULREZYSJ0qfM00y.jpg', 'Anna Gunn is an American actress.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('RJ Mitte', 'Male', 'https://www.gettyimages.com/detail/news-photo/actor-rj-mitte-poses-for-a-picture-at-the-parke-ronen-mens-news-photo/480987452', 'RJ Mitte is an American actor.');
+('RJ Mitte', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xdnstENLdWMPWt9qyhtf695L4t6.jpg', 'RJ Mitte is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Vince Gilligan', 'Male', 'https://www.gettyimages.com/detail/news-photo/writer-and-producer-vince-gilligan-is-photographed-for-los-news-photo/453605110', 'Vince Gilligan is an American writer, producer, and director.');
+('Vince Gilligan', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/8eTtJ7XVXY0BnEeUaSiTAraTIXd.jpg', 'Vince Gilligan is an American writer, producer, and director.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Masi Oka', 'Male', 'https://www.gettyimages.com/detail/news-photo/writer-and-producer-vince-gilligan-is-photographed-for-los-news-photo/453605110', 'Masi Oka is a Japanese-American actor.');
+('Masi Oka', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/snk6JiXOOoRjPtHU5VMoy6qbd32.jpg', 'Masi Oka is a Japanese-American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Bob Odenkirk', 'Male', 'https://www.gettyimages.com/detail/news-photo/bob-odenkirk-attends-the-2020-vanity-fair-oscar-party-news-photo/1205182893', 'Bob Odenkirk is an American actor and comedian.');
+('Bob Odenkirk', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/wVoSUexYH79igPgxIXKWRlV2uBk.jpg', 'Bob Odenkirk is an American actor and comedian.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Giancarlo Esposito', 'Male', 'https://www.gettyimages.com/detail/news-photo/giancarlo-esposito-news-photo/1466243335', 'Giancarlo Esposito is an American actor.');
+('Giancarlo Esposito', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/qUUfTmpZPhy4zIs8oVk7OINLQqu.jpg', 'Giancarlo Esposito is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Krysten Ritter', 'Female', 'https://www.gettyimages.com/detail/news-photo/actress-krysten-ritter-arrives-at-the-los-angeles-premiere-news-photo/91275423', 'Krysten Ritter is an American actress.');
+('Krysten Ritter', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/Aba6EJ1NxhDTsJyO5F0oigTjeuD.jpg', 'Krysten Ritter is an American actress.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Charlie Cox', 'Male', 'https://www.gettyimages.com/detail/news-photo/charlie-cox-attends-abc-and-marvel-honor-stan-lee-at-new-news-photo/1179689197', 'Charlie Cox is an English actor.');
+('Charlie Cox', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kTjiABk3TJ3yI0Cto5RsvyT6V3o.jpg', 'Charlie Cox is an English actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Vincent D''Onofrio', 'Male', 'https://www.gettyimages.com/detail/news-photo/vincent-donofrio-attends-the-magnificent-seven-premiere-at-news-photo/608565988', 'Vincent D''Onofrio is an American actor and producer.');
+('Vincent D''Onofrio', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1V4DbU1mfEim4oaA5bvJywDAKwB.jpg', 'Vincent D''Onofrio is an American actor and producer.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Finn Jones', 'Male', 'https://www.gettyimages.com/detail/news-photo/netflix-presents-marvels-iron-fist-at-new-york-comic-con-news-photo/613396396', 'Finn Jones is an English actor.');
+('Finn Jones', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg', 'Finn Jones is an English actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Mike Colter', 'Male', 'https://www.gettyimages.com/detail/news-photo/mike-colter-attends-the-2019-cbs-upfront-at-the-plaza-on-news-photo/1149387812', 'Mike Colter is an American actor.');
+('Mike Colter', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/iPg0J9UzAlPj1fLEJNllpW9IhGe.jpg', 'Mike Colter is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Rosario Dawson', 'Female', 'https://www.gettyimages.com/detail/news-photo/rosario-dawson-attends-the-28th-screen-actors-guild-awards-news-photo/1373200076', 'Rosario Dawson is an American actress.');
+('Rosario Dawson', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/9blYMaj79VGC6BHTLmJp3V5S8r3.jpg', 'Rosario Dawson is an American actress.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Scott Glenn', 'Male', 'https://www.gettyimages.com/detail/news-photo/scott-glenn-discusses-the-leftovers-and-marvels-the-news-photo/687862510', 'Scott Glenn is an American actor.');
+('Scott Glenn', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1K2IvGXFbKsgkExuUsRvy4F0c9e.jpg', 'Scott Glenn is an American actor.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Sigourney Weaver', 'Female', 'https://www.gettyimages.com/detail/news-photo/sigourney-weaver-attends-the-glamour-women-of-the-year-news-photo/538692422', 'Sigourney Weaver is an American actress.');
+('Sigourney Weaver', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xxYawgFO1woBRveH7WL9D1BxB4W.jpg', 'Sigourney Weaver is an American actress.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Anthony Hopkins', 'Male', 'https://www.gettyimages.com/detail/news-photo/sir-anthony-hopkins-attends-the-us-premiere-of-transformers-news-photo/699006524', 'Silence of the Lambs is the goat movie.');
+('Anthony Hopkins', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/ifI2QhpUlAwiWNwdDsFMRlPovsk.jpg', 'Silence of the Lambs is the goat movie.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Jessica Jones', 'Female', 'https://www.gettyimages.com/detail/news-photo/actress-krysten-ritter-attends-the-netflixfysee-event-for-news-photo/960262428', 'Jessica Jones is a fictional superhero.');
+('Jessica Jones', 'Female', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/hSXhmslCL6KRfGCj1T0W7LH0DHS.jpg', 'Jessica Jones is a fictional superhero.');
 
 INSERT INTO person (name, gender, poster_path, biography) VALUES
-('Luke Cage', 'Male', 'https://www.gettyimages.com/detail/news-photo/mustafa-shakir-attends-the-luke-cage-season-2-premiere-at-news-photo/980883478', 'Luke Cage is a fictional superhero.');
+('Luke Cage', 'Male', 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/lR6rZnfRUtHHWWISKKdVeXVcVy5.jpg', 'Luke Cage is a fictional superhero.');
 
 -- movie_person table
 INSERT INTO movie_person (movie_id, person_id) VALUES
