@@ -128,7 +128,7 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public List<TvShowGenreDTO> getGenres(Integer tvId) {
-        List<TvShowGenre> genres = tvShowGenreRepository.findAll();
+        List<TvShowGenre> genres = tvShowGenreRepository.findTvShowGenreByTvshowId(tvId);
         List<TvShowGenreDTO> genreDTOs = new ArrayList<>();
         for(TvShowGenre genre: genres){
             TvShowGenreDTO tvShowGenreDTO = TvShowGenreDTO.builder()

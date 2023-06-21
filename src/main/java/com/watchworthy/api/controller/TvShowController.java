@@ -7,10 +7,13 @@ import com.watchworthy.api.service.SeasonService;
 import com.watchworthy.api.service.TvShowService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.watchworthy.api.config.Constants.ROLE_ADMIN;
 
 @RestController
 @RequestMapping("/tv")
@@ -25,7 +28,7 @@ public class TvShowController {
         this.seasonService = seasonService;
         this.tvShowService = tvShowService;
     }
-
+//    @Secured({ROLE_ADMIN})
     @PostMapping("")
     public ResponseEntity<Void> createTvShow(@RequestBody TvShowDTO tvShowDTO) {
         tvShowService.save(tvShowDTO);
