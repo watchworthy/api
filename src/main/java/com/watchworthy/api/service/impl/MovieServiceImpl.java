@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -190,7 +191,7 @@ public class MovieServiceImpl implements MovieService {
         MovieDTO movieDTO = modelMapper.map(movie, MovieDTO.class);
 
         // Include the comments
-        List<CommentDTO> commentDTOs = new ArrayList<>();
+        HashSet<CommentDTO> commentDTOs = new HashSet<>();
         for (Comment comment : movie.getComments()) {
             CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
             commentDTOs.add(commentDTO);

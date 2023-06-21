@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class MovieDTO {
     private LocalDate releaseDate;
     private String posterPath;
     private List<GenreDTO> genres;
-    private List<CommentDTO> comments;
+    private HashSet<CommentDTO> comments;
     private List<PersonDTO> people;
     private String trailerId;
 
