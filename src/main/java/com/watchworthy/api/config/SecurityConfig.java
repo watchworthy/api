@@ -55,6 +55,7 @@ public class SecurityConfig  {
             "/genre/**",
             "/events/**",
             "/award/**",
+            "/anime/**",
             "/tvshowrates/**",
             "/movierates/**",
             "/commentlikes/**",
