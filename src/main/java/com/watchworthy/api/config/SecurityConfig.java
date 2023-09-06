@@ -61,7 +61,9 @@ public class SecurityConfig  {
             "/tv/**",
             "/chat/**",
             "/recommended/**",
-            "/error"
+            "/error",
+            "/testparent/**",
+            "/testchild/**"
     };
 
 
