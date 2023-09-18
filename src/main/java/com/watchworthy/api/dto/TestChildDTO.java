@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class TestChildDTO {
     private Long id ;
     private String name ;
-    private Long testParent_Id;
+    private Long testParentE_id;
+
 }

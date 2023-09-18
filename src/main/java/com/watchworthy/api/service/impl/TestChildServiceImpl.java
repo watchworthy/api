@@ -4,6 +4,7 @@ import com.watchworthy.api.dto.CreateTestChildDTO;
 import com.watchworthy.api.dto.TestChildDTO;
 import com.watchworthy.api.entity.TestChild;
 import com.watchworthy.api.entity.TestParent;
+
 import com.watchworthy.api.repository.TestChildRepository;
 import com.watchworthy.api.repository.TestParentRepository;
 import com.watchworthy.api.service.TestChildService;
@@ -30,7 +31,7 @@ public class TestChildServiceImpl implements TestChildService {
         TestChild newTestChild = new TestChild();
         newTestChild.setName(createTestChildDTO.getName());
         newTestChild.setTestParent(testParent);
-         return testChildRepository.save(newTestChild);
+        return testChildRepository.save(newTestChild);
     }
 
     @Override
@@ -45,17 +46,57 @@ public class TestChildServiceImpl implements TestChildService {
     }
 
     @Override
-    public TestChild updateChildEntity(Long id, TestChild testChild) {
-        TestChild existingEntity = getChildEntityById(id);
-        existingEntity.setName(testChild.getName());
-        return testChildRepository.save(existingEntity);
+    public TestChildDTO updateChildEntity(Long parentId, Long childId, TestChildDTO updatedChildDTO) {
+        // Retrieve the parent entity by its ID
+        System.out.println("une e dua jeten");
+        TestParent testParent = testParentRepository.findById(updatedChildDTO.getTestParentE_id())
+                .orElseThrow();
+
+        // Retrieve the existing child entity by its ID and parent ID
+        TestChild existingEntity = getChildEntityByIdAndParentId(childId, parentId);
+
+        // Check if the child exists
+        if (existingEntity == null) {
+            System.out.println("Child with ID " + childId + " not found under parent with ID " + parentId);
+        }
+
+        // Update the existing entity with the new data
+        existingEntity.setName(updatedChildDTO.getName());
+
+        // Set the parent for the child
+        existingEntity.setTestParent(testParent);
+
+        // Save the updated entity
+        existingEntity = testChildRepository.save(existingEntity);
+
+        // Convert the updated entity to DTO and return it
+        return convertToDto(existingEntity);
     }
 
     @Override
-    public void deleteChildEntity(Long id) {
-        testChildRepository.findById(id).ifPresent(testChild -> testChildRepository.deleteById(id));
+    public void deleteChildEntity(Long parentId, Long childId) {
+        // Retrieve the parent entity by its ID
+        TestParent testParent = testParentRepository.findById(parentId)
+                .orElseThrow();
+
+        // Retrieve the existing child entity by its ID and parent ID
+        TestChild existingEntity = getChildEntityByIdAndParentId(childId, parentId);
+
+        // Check if the child exists
+        if (existingEntity != null) {
+            // Delete the entity
+            testChildRepository.deleteById(childId);
+        }
     }
+
+    // Helper method to get a child entity by ID and parent ID
+    private TestChild getChildEntityByIdAndParentId(Long childId, Long parentId) {
+        return testChildRepository.findByIdAndTestParent_Id(childId, parentId).orElse(null);
+    }
+
     public TestChildDTO convertToDto(TestChild testChild) {
-        return modelMapper.map(testChild, TestChildDTO.class);
+        var result = modelMapper.map(testChild, TestChildDTO.class);
+        result.setTestParentE_id(testChild.getTestParent().getId());
+        return result ;
     }
 }

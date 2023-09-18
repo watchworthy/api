@@ -39,18 +39,23 @@ public class TestChildController {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TestChild> updateChildEntity(
-            @PathVariable Long id,
-            @RequestBody TestChild updatedEntity
+    @PutMapping("/{parentId}/{childId}")
+    public ResponseEntity<TestChildDTO> updateChildEntity(
+            @PathVariable Long parentId,
+            @PathVariable Long childId,
+            @RequestBody TestChildDTO updatedChildDTO
     ) {
-        TestChild entity = testChildService.updateChildEntity(id, updatedEntity);
+        TestChildDTO entity = testChildService.updateChildEntity(parentId, childId, updatedChildDTO);
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteChildEntity(@PathVariable Long id) {
-        testChildService.deleteChildEntity(id);
+
+    @DeleteMapping("/{parentId}/{childId}")
+    public ResponseEntity<Void> deleteChildEntity(
+            @PathVariable Long parentId,
+            @PathVariable Long childId
+    ) {
+        testChildService.deleteChildEntity(parentId, childId);
         return ResponseEntity.noContent().build();
     }
 

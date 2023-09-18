@@ -12,6 +12,9 @@ public interface TestChildService {
     TestChild createChildEntity(CreateTestChildDTO createTestChildDTO);
     List<TestChildDTO> getAllChildEntities();
     TestChild getChildEntityById(Long id);
-    TestChild updateChildEntity(Long id, TestChild testChild);
-    void deleteChildEntity(Long id);
+    TestChildDTO updateChildEntity(Long parentId, Long childId, TestChildDTO updatedChildDTO);
+    void deleteChildEntity(Long parentId, Long childId);
+
+
+
 }
