@@ -14,7 +14,7 @@ public class TestChild {
 
     private String name ;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="testParentE_id")
     private TestParent testParent;
 }

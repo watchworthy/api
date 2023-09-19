@@ -8,6 +8,9 @@ import com.watchworthy.api.entity.TestParent;
 import com.watchworthy.api.repository.TestChildRepository;
 import com.watchworthy.api.repository.TestParentRepository;
 import com.watchworthy.api.service.TestChildService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,8 @@ public class TestChildServiceImpl implements TestChildService {
     private final TestChildRepository testChildRepository;
     private final TestParentRepository testParentRepository;
     private final ModelMapper modelMapper;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public TestChildServiceImpl (TestChildRepository testChildRepository, TestParentRepository testParentRepository, ModelMapper modelMapper){
         this.testChildRepository = testChildRepository;
@@ -26,11 +31,17 @@ public class TestChildServiceImpl implements TestChildService {
         this.modelMapper = modelMapper;
     }
     @Override
+    @Transactional
     public TestChild createChildEntity(CreateTestChildDTO createTestChildDTO) {
         TestParent testParent = testParentRepository.findById(createTestChildDTO.getParent_id()).orElse(null);
         TestChild newTestChild = new TestChild();
         newTestChild.setName(createTestChildDTO.getName());
-        newTestChild.setTestParent(testParent);
+        if (testParent != null) {
+            // Ensure the testParent entity is managed
+            testParent = entityManager.merge(testParent);
+            newTestChild.setTestParent(testParent);
+        }
+
         return testChildRepository.save(newTestChild);
     }
 
@@ -74,19 +85,8 @@ public class TestChildServiceImpl implements TestChildService {
     }
 
     @Override
-    public void deleteChildEntity(Long parentId, Long childId) {
-        // Retrieve the parent entity by its ID
-        TestParent testParent = testParentRepository.findById(parentId)
-                .orElseThrow();
-
-        // Retrieve the existing child entity by its ID and parent ID
-        TestChild existingEntity = getChildEntityByIdAndParentId(childId, parentId);
-
-        // Check if the child exists
-        if (existingEntity != null) {
-            // Delete the entity
-            testChildRepository.deleteById(childId);
-        }
+    public void deleteChildEntity(Long id) {
+        testChildRepository.findById(id).ifPresent(testChild -> testChildRepository.deleteById(id));
     }
 
     // Helper method to get a child entity by ID and parent ID

@@ -13,7 +13,7 @@ public interface TestChildService {
     List<TestChildDTO> getAllChildEntities();
     TestChild getChildEntityById(Long id);
     TestChildDTO updateChildEntity(Long parentId, Long childId, TestChildDTO updatedChildDTO);
-    void deleteChildEntity(Long parentId, Long childId);
+    void deleteChildEntity(Long id);
 
 
 

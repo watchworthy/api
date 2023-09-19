@@ -50,12 +50,11 @@ public class TestChildController {
     }
 
 
-    @DeleteMapping("/{parentId}/{childId}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteChildEntity(
-            @PathVariable Long parentId,
-            @PathVariable Long childId
+            @PathVariable Long id
     ) {
-        testChildService.deleteChildEntity(parentId, childId);
+        testChildService.deleteChildEntity(id);
         return ResponseEntity.noContent().build();
     }
 
