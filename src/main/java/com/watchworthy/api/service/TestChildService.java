@@ -2,6 +2,7 @@ package com.watchworthy.api.service;
 
 import com.watchworthy.api.dto.CreateTestChildDTO;
 import com.watchworthy.api.dto.TestChildDTO;
+import com.watchworthy.api.dto.UpdateChildDTO;
 import com.watchworthy.api.entity.TestChild;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public interface TestChildService {
     TestChild createChildEntity(CreateTestChildDTO createTestChildDTO);
     List<TestChildDTO> getAllChildEntities();
     TestChild getChildEntityById(Long id);
-    TestChildDTO updateChildEntity(Long parentId, Long childId, TestChildDTO updatedChildDTO);
+    boolean updateChildEntity(Long id,  UpdateChildDTO updatedChildDTO);
     void deleteChildEntity(Long id);
 
 

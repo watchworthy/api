@@ -2,6 +2,7 @@ package com.watchworthy.api.service.impl;
 
 import com.watchworthy.api.dto.CreateTestChildDTO;
 import com.watchworthy.api.dto.TestChildDTO;
+import com.watchworthy.api.dto.UpdateChildDTO;
 import com.watchworthy.api.entity.TestChild;
 import com.watchworthy.api.entity.TestParent;
 
@@ -9,6 +10,7 @@ import com.watchworthy.api.repository.TestChildRepository;
 import com.watchworthy.api.repository.TestParentRepository;
 import com.watchworthy.api.service.TestChildService;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -57,31 +59,24 @@ public class TestChildServiceImpl implements TestChildService {
     }
 
     @Override
-    public TestChildDTO updateChildEntity(Long parentId, Long childId, TestChildDTO updatedChildDTO) {
-        // Retrieve the parent entity by its ID
-        System.out.println("une e dua jeten");
-        TestParent testParent = testParentRepository.findById(updatedChildDTO.getTestParentE_id())
-                .orElseThrow();
+    public boolean updateChildEntity(Long id,  UpdateChildDTO updatedChildDTO) {
 
-        // Retrieve the existing child entity by its ID and parent ID
-        TestChild existingEntity = getChildEntityByIdAndParentId(childId, parentId);
+        TestChild existingTestChild = testChildRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("TestChild with ID " + id + " not found"));
 
-        // Check if the child exists
-        if (existingEntity == null) {
-            System.out.println("Child with ID " + childId + " not found under parent with ID " + parentId);
-        }
 
-        // Update the existing entity with the new data
-        existingEntity.setName(updatedChildDTO.getName());
+        existingTestChild.setName(updatedChildDTO.getName());
 
-        // Set the parent for the child
-        existingEntity.setTestParent(testParent);
 
-        // Save the updated entity
-        existingEntity = testChildRepository.save(existingEntity);
+        Long parentId = updatedChildDTO.getTestParentE_id();
+        TestParent newParent = testParentRepository.findById(parentId)
+                .orElseThrow(() -> new EntityNotFoundException("TestParent with ID " + parentId + " not found"));
 
-        // Convert the updated entity to DTO and return it
-        return convertToDto(existingEntity);
+
+        existingTestChild.setTestParent(newParent);
+
+        testChildRepository.save(existingTestChild);
+        return true;
     }
 
     @Override

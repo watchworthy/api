@@ -2,6 +2,7 @@ package com.watchworthy.api.controller;
 
 import com.watchworthy.api.dto.CreateTestChildDTO;
 import com.watchworthy.api.dto.TestChildDTO;
+import com.watchworthy.api.dto.UpdateChildDTO;
 import com.watchworthy.api.entity.TestChild;
 import com.watchworthy.api.service.TestChildService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,11 @@ public class TestChildController {
         return new ResponseEntity<>(entity, HttpStatus.OK);
     }
 
-    @PutMapping("/{parentId}/{childId}")
-    public ResponseEntity<TestChildDTO> updateChildEntity(
-            @PathVariable Long parentId,
-            @PathVariable Long childId,
-            @RequestBody TestChildDTO updatedChildDTO
+    @PutMapping("/{id}")
+    public boolean updateChildEntity(
+            @PathVariable Long id, @RequestBody UpdateChildDTO updatedTestChildDTO
     ) {
-        TestChildDTO entity = testChildService.updateChildEntity(parentId, childId, updatedChildDTO);
-        return new ResponseEntity<>(entity, HttpStatus.OK);
+        return testChildService.updateChildEntity(id, updatedTestChildDTO);
     }
 
 
