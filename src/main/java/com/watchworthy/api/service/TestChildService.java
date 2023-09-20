@@ -17,5 +17,6 @@ public interface TestChildService {
     void deleteChildEntity(Long id);
 
 
-
+    List<TestChildDTO> filterChildEntitiesByName(String name);
+    List<TestChildDTO> filterChildEntitiesByParentName(String parentName);
 }

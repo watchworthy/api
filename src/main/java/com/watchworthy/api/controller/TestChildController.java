@@ -56,4 +56,33 @@ public class TestChildController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<TestChildDTO>> filterChildEntitiesByName(
+            @RequestParam(value = "name", required = false) String name
+    ) {
+        List<TestChildDTO> filteredEntities = testChildService.filterChildEntitiesByName(name);
+
+        if (filteredEntities.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(filteredEntities);
+        }
+    }
+
+    @GetMapping("/filterByParentName")
+    public ResponseEntity<List<TestChildDTO>> filterChildEntitiesByParentName(
+            @RequestParam(value = "parentName", required = false) String parentName
+    ) {
+        List<TestChildDTO> filteredEntities = testChildService.filterChildEntitiesByParentName(parentName);
+
+        if (filteredEntities.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(filteredEntities);
+        }
+    }
+
+
+
+
 }

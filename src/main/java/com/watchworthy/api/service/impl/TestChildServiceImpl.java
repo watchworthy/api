@@ -94,4 +94,46 @@ public class TestChildServiceImpl implements TestChildService {
         result.setTestParentE_id(testChild.getTestParent().getId());
         return result ;
     }
+
+
+    @Override
+    public List<TestChildDTO> filterChildEntitiesByName(String name) {
+        List<TestChild> filteredEntities = testChildRepository.findByName(name);
+
+        TestParent testParent = testParentRepository.findByName(name);
+
+        if (testParent != null) {
+            // Filter the TestChild entities further by TestParent name
+            filteredEntities = filteredEntities.stream()
+                    .filter(testChild -> testChild.getTestParent() != null &&
+                            name.equals(testChild.getTestParent().getName()))
+                    .collect(Collectors.toList());
+        }
+
+        // Convert the filtered entities to DTOs
+        return filteredEntities.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TestChildDTO> filterChildEntitiesByParentName(String parentName) {
+        List<TestChild> filteredEntities;
+
+        if (parentName != null) {
+            filteredEntities = testChildRepository.findByTestParent_Name(parentName);
+        } else {
+            filteredEntities = testChildRepository.findAll();
+        }
+
+        // Convert the filtered entities to DTOs
+        return filteredEntities.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
 }
